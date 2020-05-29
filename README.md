@@ -1,2 +1,2 @@
 # poc-tcc
-Projetos de exemplo conclusão do curdo
+Projetos de exemplo conclusão do curso
