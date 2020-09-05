@@ -6,7 +6,12 @@ namespace MenuPrincipal
     public class MenuPrincipal : MonoBehaviour
     {
 
-        public void OnObjectSelectButtonClick()
+        public void OnObjectCreateWithQrCodeButtonClick()
+        {
+            SceneManager.LoadScene("Texture2DToMatExample");
+        }
+
+        public void OnObjectCreateWithoutQrCodeButtonClick()
         {
             SceneManager.LoadScene("Texture2DToMatExample");
         }

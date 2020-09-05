@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.UnityUtils;
 using OpenCVForUnity.Calib3dModule;
 using OpenCVForUnity.UnityUtils.Helper;
 using OpenCVMarkerBasedAR;
-using UnityEditor;
 using OpenCVForUnity.ImgprocModule;
 using OpenCVForUnity.ArucoModule;
-using System.Linq;
-using System;
+using OpenCVMarkerLessAR;
+using OpenCVForUnity.ImgcodecsModule;
+using System.IO;
 
 namespace MarkerBasedARExample
 {
@@ -117,12 +116,36 @@ namespace MarkerBasedARExample
 
         InformationObjectList informationObjectList;
 
+        /// <summary>
+        /// The pattern.
+        /// </summary>
+        Pattern pattern;
+
+        /// <summary>
+        /// The pattern tracking info.
+        /// </summary>
+        PatternTrackingInfo patternTrackingInfo;
+
+        /// <summary>
+        /// The pattern detector.
+        /// </summary>8
+        List<PatternDetector> patternDetectorList;
+
+        /// <summary>
+        /// The pattern mat.
+        /// </summary>
+        Mat patternMat;
+
         private void Awake()
         {
+            patternDetectorList = new List<PatternDetector>();
             informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString("informationObject"));
             markerList = GameObject.Find("/MarkerList");
-            
-            CreatComponent();
+
+            if(informationObjectList.ListInformationObject.Count > 0)
+            {
+                CreatComponent();
+            }
         }
 
         // Use this for initialization
@@ -133,9 +156,37 @@ namespace MarkerBasedARExample
             webCamTextureToMatHelper = gameObject.GetComponent<WebCamTextureToMatHelper>();
             webCamTextureToMatHelper.Initialize();
 
-            dictionaryAruco = Aruco.getPredefinedDictionary(Communs.dictionaryId);
+            dictionaryAruco = Aruco.getPredefinedDictionary(Communs.DictionaryId);
             cornersAruco = new List<Mat>();
             idsAruco = new Mat();
+
+            string pathImageDinamic = string.Concat(Application.persistentDataPath, Communs.FolderImagemDynamic);
+            string[] listaImagem = Directory.GetFiles(pathImageDinamic);
+
+            foreach (string caminhoImagem in listaImagem)
+            {
+                patternMat = Imgcodecs.imread(caminhoImagem);
+
+                if (patternMat.total() > 0)
+                {
+                    Imgproc.cvtColor(patternMat, patternMat, Imgproc.COLOR_BGR2RGB);
+
+                    Texture2D patternTexture = new Texture2D(patternMat.width(), patternMat.height(), TextureFormat.RGBA32, false);
+
+                    //To reuse mat, set the flipAfter flag to true.
+                    Utils.matToTexture2D(patternMat, patternTexture, true, 0, true);
+                    Debug.Log("patternMat dst ToString " + patternMat.ToString());
+
+                    pattern = new Pattern();
+                    patternTrackingInfo = new PatternTrackingInfo();
+
+                    PatternDetector patternDetector = new PatternDetector(null, null, null, true);
+                    patternDetector.buildPatternFromImage(patternMat, pattern);
+                    patternDetector.train(pattern);
+
+                    patternDetectorList.Add(patternDetector);
+                }
+            }
         }
 
         // Update is called once per frame
@@ -154,11 +205,22 @@ namespace MarkerBasedARExample
 
                 Aruco.detectMarkers(rgbMat, dictionaryAruco, cornersAruco, idsAruco);
 
+                foreach (PatternDetector patternDetector in patternDetectorList)
+                {
+                    bool patternFound = patternDetector.findPattern(rgbMat, patternTrackingInfo);
+
+                    if (patternFound)
+                    {
+                        Debug.Log("encontrou a imagem");
+                    }
+                }
+
                 if (idsAruco.total() > 0)
                 {
                     for (int i = 0; i < idsAruco.cols(); i++)
                     {
                         int idMarker = (int)idsAruco.get(0, i)[0];
+                        Debug.Log(idMarker);
 
                         foreach (MarkerSettings settings in markerSettingsList)
                         {
@@ -236,9 +298,9 @@ namespace MarkerBasedARExample
                 markerSettings.markerDesign = markerDesign;
                 markerSettings.ARGameObject = ARObjects;
 
-                string pathFBX = String.Concat(Communs.PathFBX, informationObject.Name, Communs.ExtensionFBX);
+                string pathFBX = string.Concat(Communs.PathFBX, informationObject.Name, Communs.ExtensionFBX);
                 GameObject objectAR = Import.FBX(pathFBX);
-                GameObject objectCreated = Instantiate(objectAR) as GameObject;
+                GameObject objectCreated = Instantiate(objectAR);
                 objectCreated.layer = 8;
 
                 objectCreated.transform.SetParent(ARObjects.transform);

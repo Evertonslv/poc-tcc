@@ -1,4 +1,5 @@
 ﻿using Boo.Lang;
+using OpenCVForUnity.UnityUtils;
 using System;
 using System.Collections;
 using System.Globalization;
@@ -12,6 +13,7 @@ public class CreateImage : MonoBehaviour
     private GameObject[] listObjectSelecionado;
     private string namePlayerPrefab = "informationObject";
     private InformationObjectList informationObjectList;
+    public bool isWithQrCode;
 
     private void Awake()
     {
@@ -42,10 +44,22 @@ public class CreateImage : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         ObjectScreenVisible(false);
-        
+                        
         Texture2D imageTelaJogo = ScreenCapture.CaptureScreenshotAsTexture(2);
+        imageTelaJogo.SetPixel(500, 500, Color.gray);
+        imageTelaJogo.Apply();
 
-        string imagePath = String.Concat(Application.persistentDataPath, "/image_screen.png");
+        string imagePath;
+
+        if (isWithQrCode)
+        {
+            imagePath = string.Concat(Application.persistentDataPath, "/image_screen.png");
+        }
+        else
+        {
+            imagePath = string.Concat(Application.persistentDataPath, Communs.FolderImagemDynamic, "image_screen.png");
+        }
+        
         SaveImage(imageTelaJogo, imagePath);
 
         ObjectScreenVisible(true);

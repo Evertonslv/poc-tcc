@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class CreateMarker : MonoBehaviour
 {
-    private int dictionaryId = Communs.dictionaryId;
+    private int dictionaryId = Communs.DictionaryId;
     private int markerSize = 100;
     private Mat markerImage;
     private RawImage imageQrCode;
