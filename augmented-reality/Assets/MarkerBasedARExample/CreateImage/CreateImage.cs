@@ -11,14 +11,20 @@ public class CreateImage : MonoBehaviour
 {    
     private GameObject buttonCreateImage;
     private GameObject[] listObjectSelecionado;
-    private string namePlayerPrefab = "informationObject";
+    private string nameBDWithQrCodePlayerPrefab;
+    private string nameBDWithoutQrCodePlayerPrefab;
     private InformationObjectList informationObjectList;
+    private string imagePath;
+
     public bool isWithQrCode;
 
     private void Awake()
     {
-        PlayerPrefs.DeleteAll();
-        informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString("informationObject"));
+        nameBDWithQrCodePlayerPrefab = Communs.NameBDWithQrCodePlayerPrefab;
+        nameBDWithoutQrCodePlayerPrefab = Communs.NameBDWithoutQrCodePlayerPrefab;
+
+        //PlayerPrefs.DeleteAll();
+        informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(nameBDWithQrCodePlayerPrefab));
 
         if (informationObjectList == null)
         {
@@ -35,7 +41,6 @@ public class CreateImage : MonoBehaviour
     public void OnCreateImageButton()
     {
         StartCoroutine(CaptureScreenShot());
-        SaveInformationObject();
         SceneManager.LoadScene("WebCamTextureMarkerBasedARExample");
     }
 
@@ -49,18 +54,15 @@ public class CreateImage : MonoBehaviour
         imageTelaJogo.SetPixel(500, 500, Color.gray);
         imageTelaJogo.Apply();
 
-        string imagePath;
+        imagePath = string.Concat(Application.persistentDataPath, Communs.FolderImagemDynamic, "image_screen.png");
 
         if (isWithQrCode)
         {
             imagePath = string.Concat(Application.persistentDataPath, "/image_screen.png");
         }
-        else
-        {
-            imagePath = string.Concat(Application.persistentDataPath, Communs.FolderImagemDynamic, "image_screen.png");
-        }
         
         SaveImage(imageTelaJogo, imagePath);
+        SaveInformationObject();
 
         ObjectScreenVisible(true);
     }
@@ -75,7 +77,15 @@ public class CreateImage : MonoBehaviour
     {
         SetInformationObject();
         string informationList = JsonUtility.ToJson(informationObjectList);
-        PlayerPrefs.SetString(namePlayerPrefab, informationList);
+
+        string nameBDPlayerPrefab = nameBDWithoutQrCodePlayerPrefab;
+
+        if (isWithQrCode)
+        {
+            nameBDPlayerPrefab = nameBDWithQrCodePlayerPrefab;
+        }
+
+        PlayerPrefs.SetString(nameBDPlayerPrefab, informationList);
         PlayerPrefs.Save();
     }
 
@@ -88,6 +98,7 @@ public class CreateImage : MonoBehaviour
         {
             informationObject = new InformationObject();
             informationObject.Name = objectSelect.name;
+            informationObject.ImagePathWithoutQrCode = imagePath;
             informationObject.IdMeker = markerIdObject.getIdMarker(objectSelect.name);
             informationObject.Position = objectSelect.transform.position;
             informationObject.Rotation = objectSelect.transform.rotation;

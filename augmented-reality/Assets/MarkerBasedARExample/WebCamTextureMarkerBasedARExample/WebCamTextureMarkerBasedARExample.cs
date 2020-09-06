@@ -127,30 +127,33 @@ namespace MarkerBasedARExample
         PatternTrackingInfo patternTrackingInfo;
 
         /// <summary>
-        /// The pattern detector.
-        /// </summary>8
-        List<PatternDetector> patternDetectorList;
-
-        /// <summary>
         /// The pattern mat.
         /// </summary>
         Mat patternMat;
 
         private void Awake()
         {
-            patternDetectorList = new List<PatternDetector>();
-            informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString("informationObject"));
             markerList = GameObject.Find("/MarkerList");
+            
+            informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithQrCodePlayerPrefab));
 
-            if(informationObjectList.ListInformationObject.Count > 0)
+            if(informationObjectList != null && informationObjectList.ListInformationObject.Count > 0)
             {
-                CreatComponent();
+                CreatComponentWithQrCode();
+            }
+
+            informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithoutQrCodePlayerPrefab));
+
+            if (informationObjectList != null && informationObjectList.ListInformationObject.Count > 0)
+            {
+                CreatComponentWithoutQrCode();
             }
         }
 
         // Use this for initialization
         void Start ()
         {
+            patternTrackingInfo = new PatternTrackingInfo();
             markerSettingsList = markerList.transform.GetComponentsInChildren<MarkerSettings>();
 
             webCamTextureToMatHelper = gameObject.GetComponent<WebCamTextureToMatHelper>();
@@ -160,33 +163,7 @@ namespace MarkerBasedARExample
             cornersAruco = new List<Mat>();
             idsAruco = new Mat();
 
-            string pathImageDinamic = string.Concat(Application.persistentDataPath, Communs.FolderImagemDynamic);
-            string[] listaImagem = Directory.GetFiles(pathImageDinamic);
-
-            foreach (string caminhoImagem in listaImagem)
-            {
-                patternMat = Imgcodecs.imread(caminhoImagem);
-
-                if (patternMat.total() > 0)
-                {
-                    Imgproc.cvtColor(patternMat, patternMat, Imgproc.COLOR_BGR2RGB);
-
-                    Texture2D patternTexture = new Texture2D(patternMat.width(), patternMat.height(), TextureFormat.RGBA32, false);
-
-                    //To reuse mat, set the flipAfter flag to true.
-                    Utils.matToTexture2D(patternMat, patternTexture, true, 0, true);
-                    Debug.Log("patternMat dst ToString " + patternMat.ToString());
-
-                    pattern = new Pattern();
-                    patternTrackingInfo = new PatternTrackingInfo();
-
-                    PatternDetector patternDetector = new PatternDetector(null, null, null, true);
-                    patternDetector.buildPatternFromImage(patternMat, pattern);
-                    patternDetector.train(pattern);
-
-                    patternDetectorList.Add(patternDetector);
-                }
-            }
+            Debug.Log("isWithQrCode: " + Communs.isWithQrCode);
         }
 
         // Update is called once per frame
@@ -195,43 +172,57 @@ namespace MarkerBasedARExample
             if (webCamTextureToMatHelper.IsPlaying() && webCamTextureToMatHelper.DidUpdateThisFrame())
             {
                 Mat rgbaMat = webCamTextureToMatHelper.GetMat();
+                Imgproc.cvtColor(rgbaMat, rgbMat, Imgproc.COLOR_RGBA2RGB);
 
                 foreach (MarkerSettings settings in markerSettingsList)
                 {
                     settings.setAllARGameObjectsDisable();
                 }
 
-                Imgproc.cvtColor(rgbaMat, rgbMat, Imgproc.COLOR_RGBA2RGB);
-
-                Aruco.detectMarkers(rgbMat, dictionaryAruco, cornersAruco, idsAruco);
-
-                foreach (PatternDetector patternDetector in patternDetectorList)
+                if (Communs.isWithQrCode)
                 {
-                    bool patternFound = patternDetector.findPattern(rgbMat, patternTrackingInfo);
+                    Aruco.detectMarkers(rgbMat, dictionaryAruco, cornersAruco, idsAruco);
 
-                    if (patternFound)
+                    if (idsAruco.total() > 0)
                     {
-                        Debug.Log("encontrou a imagem");
+                        for (int i = 0; i < idsAruco.cols(); i++)
+                        {
+                            int idMarker = (int)idsAruco.get(0, i)[0];
+                            Debug.Log(idMarker);
+
+                            foreach (MarkerSettings settings in markerSettingsList)
+                            {
+                                if (idMarker == settings.getId())
+                                {
+                                    GameObject ARGameObjectQrCode = settings.getARGameObject();
+
+                                    if (ARGameObjectQrCode != null)
+                                    {
+                                        EstimatePoseCanonicalMarker(rgbMat, ARGameObjectQrCode);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-
-                if (idsAruco.total() > 0)
+                else
                 {
-                    for (int i = 0; i < idsAruco.cols(); i++)
+                    foreach (MarkerSettings settings in markerSettingsList)
                     {
-                        int idMarker = (int)idsAruco.get(0, i)[0];
-                        Debug.Log(idMarker);
+                        PatternDetector patternDetector = settings.GetPatternDetector();
 
-                        foreach (MarkerSettings settings in markerSettingsList)
+                        if (patternDetector != null && patternDetector.findPattern(rgbMat, patternTrackingInfo))
                         {
-                            if (idMarker == settings.getId())
+                            Debug.Log("Encontrou imagem");
+
+                            patternTrackingInfo.computePose(pattern, camMatrix, distCoeffs);
+                            transformationM = patternTrackingInfo.pose3d;
+
+                            GameObject ARGameObject = settings.getARGameObject();
+
+                            if (ARGameObject != null)
                             {
-                                GameObject ARGameObject = settings.getARGameObject();
-                                
-                                if (ARGameObject != null)
-                                {
-                                    EstimatePoseCanonicalMarker(rgbMat, ARGameObject);
-                                }
+                                EstimatePoseCanonicalMarker(rgbMat, ARGameObject);
                             }
                         }
                     }
@@ -245,20 +236,30 @@ namespace MarkerBasedARExample
         {
             Aruco.estimatePoseSingleMarkers(cornersAruco, markerLength, camMatrix, distCoeffs, rvecs, tvecs);
 
-            for (int i = 0; i < idsAruco.total(); i++)
+            if (idsAruco.total() > 0)
             {
-                using (Mat rvec = new Mat(rvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
-                using (Mat tvec = new Mat(tvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
+                for (int i = 0; i < idsAruco.total(); i++)
                 {
-                    // In this example we are processing with RGB color image, so Axis-color correspondences are X: blue, Y: green, Z: red. (Usually X: red, Y: green, Z: blue)
-                    Calib3d.drawFrameAxes(rgbMat, camMatrix, distCoeffs, rvec, tvec, markerLength * 0.5f);
-
-                    // This example can display the ARObject on only first detected marker.
-                    if (i == 0)
+                    using (Mat rvec = new Mat(rvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
+                    using (Mat tvec = new Mat(tvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
                     {
-                        UpdateARObjectTransform(rvec, tvec, ARGameObject);
+                        // In this example we are processing with RGB color image, so Axis-color correspondences are X: blue, Y: green, Z: red. (Usually X: red, Y: green, Z: blue)
+                        Calib3d.drawFrameAxes(rgbMat, camMatrix, distCoeffs, rvec, tvec, markerLength * 0.5f);
+
+                        // This example can display the ARObject on only first detected marker.
+                        if (i == 0)
+                        {
+                            UpdateARObjectTransform(rvec, tvec, ARGameObject);
+                        }
                     }
                 }
+            }
+            else
+            {
+                ARM = ARCamera.transform.localToWorldMatrix * invertYM * transformationM * invertZM;
+                
+                ARGameObject.SetActive(true);
+                ARUtils.SetTransformFromMatrix(ARGameObject.transform, ref ARM);
             }
         }
 
@@ -282,31 +283,67 @@ namespace MarkerBasedARExample
             ARUtils.SetTransformFromMatrix(ARGameObject.transform, ref ARM);
         }
 
-        void CreatComponent() {
+        void CreatComponentWithQrCode() {
             foreach(InformationObject informationObject in informationObjectList.ListInformationObject) {
-                GameObject ARObjects = new GameObject();
-                ARObjects.name = "ARObjects";
-                ARObjects.SetActive(false);
-
-                GameObject OBJMarkerSettings = new GameObject();
-                OBJMarkerSettings.name = "MarkerSettings";
-
-                MarkerDesign markerDesign = new MarkerDesign();
-                markerDesign.id = informationObject.IdMeker;
-
-                MarkerSettings markerSettings = OBJMarkerSettings.AddComponent<MarkerSettings>();
-                markerSettings.markerDesign = markerDesign;
-                markerSettings.ARGameObject = ARObjects;
-
-                string pathFBX = string.Concat(Communs.PathFBX, informationObject.Name, Communs.ExtensionFBX);
-                GameObject objectAR = Import.FBX(pathFBX);
-                GameObject objectCreated = Instantiate(objectAR);
-                objectCreated.layer = 8;
-
-                objectCreated.transform.SetParent(ARObjects.transform);
-                ARObjects.transform.SetParent(OBJMarkerSettings.transform);
-                OBJMarkerSettings.transform.SetParent(markerList.transform);
+                CreateComponent(informationObject, null);
             }
+        }
+
+        void CreatComponentWithoutQrCode()
+        {
+            foreach (InformationObject informationObject in informationObjectList.ListInformationObject)
+            {
+                patternMat = Imgcodecs.imread(informationObject.ImagePathWithoutQrCode);
+
+                if (patternMat.total() > 0)
+                {
+                    Imgproc.cvtColor(patternMat, patternMat, Imgproc.COLOR_BGR2RGB);
+
+                    Texture2D patternTexture = new Texture2D(patternMat.width(), patternMat.height(), TextureFormat.RGBA32, false);
+
+                    //To reuse mat, set the flipAfter flag to true.
+                    Utils.matToTexture2D(patternMat, patternTexture, true, 0, true);
+                    
+                    pattern = new Pattern();
+
+                    PatternDetector patternDetector = new PatternDetector(null, null, null, true);
+                    patternDetector.buildPatternFromImage(patternMat, pattern);
+                    patternDetector.train(pattern);
+
+                    CreateComponent(informationObject, patternDetector);
+                }
+            }
+        }
+
+        void CreateComponent(InformationObject informationObject, PatternDetector patternDetector)
+        {
+            GameObject ARObjects = new GameObject();
+            ARObjects.name = "ARObjects";
+            ARObjects.SetActive(false);
+
+            GameObject OBJMarkerSettings = new GameObject();
+            OBJMarkerSettings.name = "MarkerSettings";
+
+            MarkerDesign markerDesign = new MarkerDesign();
+            markerDesign.id = informationObject.IdMeker;
+
+            MarkerSettings markerSettings = OBJMarkerSettings.AddComponent<MarkerSettings>();
+            markerSettings.PatternDetector = patternDetector;
+            markerSettings.markerDesign = markerDesign;
+            markerSettings.ARGameObject = ARObjects;
+
+            string pathFBX = string.Concat(Communs.PathFBX, informationObject.Name, Communs.ExtensionFBX);
+            GameObject objectAR = Import.FBX(pathFBX);
+            GameObject objectCreated = Instantiate(objectAR);
+            objectCreated.transform.localScale = informationObject.Scale;
+            objectCreated.transform.position = Vector3.zero;
+            objectCreated.transform.rotation = Quaternion.identity;
+            objectCreated.layer = 8;
+
+
+            objectCreated.transform.SetParent(ARObjects.transform);
+            ARObjects.transform.SetParent(OBJMarkerSettings.transform);
+            OBJMarkerSettings.transform.SetParent(markerList.transform);
         }
 
         /// <summary>
@@ -375,7 +412,6 @@ namespace MarkerBasedARExample
             } else {
                 ARCamera.fieldOfView = (float)(fovy [0] * fovYScale);
             }
-
             
             MarkerDesign[] markerDesigns = new MarkerDesign[markerSettingsList.Length];
             for (int i = 0; i < markerDesigns.Length; i++) {
@@ -388,6 +424,7 @@ namespace MarkerBasedARExample
             tvecs = new Mat();
 
             rgbMat = new Mat(webCamTextureMat.rows(), webCamTextureMat.cols(), CvType.CV_8UC3);
+            transformationM = new Matrix4x4();
 
             invertYM = Matrix4x4.TRS (Vector3.zero, Quaternion.identity, new Vector3 (1, -1, 1));
             invertZM = Matrix4x4.TRS (Vector3.zero, Quaternion.identity, new Vector3 (1, 1, -1));

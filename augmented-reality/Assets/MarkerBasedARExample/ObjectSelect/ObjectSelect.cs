@@ -14,8 +14,8 @@ public class ObjectSelect : MonoBehaviour
         GameObject objectSelected = SelectObject("Sledge.fbx");
         CreateObject(objectSelected, 33);
 
-        // GameObject objectSelected1 = SelectObject("Gift1.fbx");
-        // CreateObject(objectSelected1, 1);        
+        //GameObject objectSelected1 = SelectObject("Gift1.fbx");
+        //CreateObject(objectSelected1, 333);
     }
 
     private GameObject SelectObject(string nomeObject)

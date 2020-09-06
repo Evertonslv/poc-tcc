@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using OpenCVMarkerLessAR;
 
 namespace OpenCVMarkerBasedAR
 {
@@ -36,8 +37,9 @@ namespace OpenCVMarkerBasedAR
         /// The should not set to inactive per frame.
         /// </summary>
         [Tooltip ("If true, displayableMaxCount is limited to 1.")]
-        public bool
-            shouldNotSetToInactivePerFrame;
+        public bool shouldNotSetToInactivePerFrame;
+
+        public PatternDetector PatternDetector;
 
         /// <summary>
         /// Gets the marker identifier.
@@ -53,6 +55,11 @@ namespace OpenCVMarkerBasedAR
         public int getId()
         {
             return markerDesign.id;
+        }
+
+        public PatternDetector GetPatternDetector()
+        {
+            return PatternDetector;
         }
 
         public static int boolArray2id (bool[] boolArray)
