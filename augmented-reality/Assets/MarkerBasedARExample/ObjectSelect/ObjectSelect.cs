@@ -11,11 +11,11 @@ public class ObjectSelect : MonoBehaviour
         objectList = GameObject.Find("/ListObject");
         markerIdObject = MarkerIdObject.GetInstance();
 
-        GameObject objectSelected = SelectObject("Sledge.fbx");
-        CreateObject(objectSelected, 33);
+        //GameObject objectSelected = SelectObject("Sledge.fbx");
+        //CreateObject(objectSelected, 33);
 
-        //GameObject objectSelected1 = SelectObject("Gift1.fbx");
-        //CreateObject(objectSelected1, 333);
+        GameObject objectSelected1 = SelectObject("Gift1.fbx");
+        CreateObject(objectSelected1, 333);
     }
 
     private GameObject SelectObject(string nomeObject)

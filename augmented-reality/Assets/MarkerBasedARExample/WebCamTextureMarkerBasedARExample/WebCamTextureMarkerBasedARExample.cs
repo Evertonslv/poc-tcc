@@ -114,8 +114,6 @@ namespace MarkerBasedARExample
         /// </summary>
         public float rotationLowPass = 2f;
 
-        InformationObjectList informationObjectList;
-
         /// <summary>
         /// The pattern.
         /// </summary>
@@ -135,19 +133,8 @@ namespace MarkerBasedARExample
         {
             markerList = GameObject.Find("/MarkerList");
             
-            informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithQrCodePlayerPrefab));
-
-            if(informationObjectList != null && informationObjectList.ListInformationObject.Count > 0)
-            {
-                CreatComponentWithQrCode();
-            }
-
-            informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithoutQrCodePlayerPrefab));
-
-            if (informationObjectList != null && informationObjectList.ListInformationObject.Count > 0)
-            {
-                CreatComponentWithoutQrCode();
-            }
+            CreatComponentWithQrCode();
+            CreatComponentWithoutQrCode();            
         }
 
         // Use this for initialization
@@ -162,8 +149,6 @@ namespace MarkerBasedARExample
             dictionaryAruco = Aruco.getPredefinedDictionary(Communs.DictionaryId);
             cornersAruco = new List<Mat>();
             idsAruco = new Mat();
-
-            Debug.Log("isWithQrCode: " + Communs.isWithQrCode);
         }
 
         // Update is called once per frame
@@ -178,28 +163,25 @@ namespace MarkerBasedARExample
                 {
                     settings.setAllARGameObjectsDisable();
                 }
+                
+                Aruco.detectMarkers(rgbMat, dictionaryAruco, cornersAruco, idsAruco);
 
-                if (Communs.isWithQrCode)
+                if (idsAruco.total() > 0)
                 {
-                    Aruco.detectMarkers(rgbMat, dictionaryAruco, cornersAruco, idsAruco);
-
-                    if (idsAruco.total() > 0)
+                    for (int i = 0; i < idsAruco.cols(); i++)
                     {
-                        for (int i = 0; i < idsAruco.cols(); i++)
+                        int idMarker = (int)idsAruco.get(0, i)[0];
+                        Debug.Log(idMarker);
+
+                        foreach (MarkerSettings settings in markerSettingsList)
                         {
-                            int idMarker = (int)idsAruco.get(0, i)[0];
-                            Debug.Log(idMarker);
-
-                            foreach (MarkerSettings settings in markerSettingsList)
+                            if (idMarker == settings.getId())
                             {
-                                if (idMarker == settings.getId())
-                                {
-                                    GameObject ARGameObjectQrCode = settings.getARGameObject();
+                                GameObject ARGameObjectQrCode = settings.getARGameObject();
 
-                                    if (ARGameObjectQrCode != null)
-                                    {
-                                        EstimatePoseCanonicalMarker(rgbMat, ARGameObjectQrCode);
-                                    }
+                                if (ARGameObjectQrCode != null)
+                                {
+                                    EstimatePoseCanonicalMarker(rgbMat, ARGameObjectQrCode);
                                 }
                             }
                         }
@@ -284,13 +266,17 @@ namespace MarkerBasedARExample
         }
 
         void CreatComponentWithQrCode() {
-            foreach(InformationObject informationObject in informationObjectList.ListInformationObject) {
+            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithQrCodePlayerPrefab));
+
+            foreach (InformationObject informationObject in informationObjectList.ListInformationObject) {
                 CreateComponent(informationObject, null);
             }
         }
 
         void CreatComponentWithoutQrCode()
         {
+            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithoutQrCodePlayerPrefab));
+
             foreach (InformationObject informationObject in informationObjectList.ListInformationObject)
             {
                 patternMat = Imgcodecs.imread(informationObject.ImagePathWithoutQrCode);
@@ -335,15 +321,21 @@ namespace MarkerBasedARExample
             string pathFBX = string.Concat(Communs.PathFBX, informationObject.Name, Communs.ExtensionFBX);
             GameObject objectAR = Import.FBX(pathFBX);
             GameObject objectCreated = Instantiate(objectAR);
-            objectCreated.transform.localScale = informationObject.Scale;
+
+            objectCreated.AddComponent<RectTransform>();
             objectCreated.transform.position = Vector3.zero;
             objectCreated.transform.rotation = Quaternion.identity;
             objectCreated.layer = 8;
 
+            RectTransform rectTransform = objectCreated.GetComponent<RectTransform>();
+
+            float widthScale = (Screen.width / rectTransform.rect.width) + 10;
+            float heightScale = (Screen.height / rectTransform.rect.height) + 10;
+            objectCreated.transform.localScale = new Vector3(widthScale, heightScale);
 
             objectCreated.transform.SetParent(ARObjects.transform);
             ARObjects.transform.SetParent(OBJMarkerSettings.transform);
-            OBJMarkerSettings.transform.SetParent(markerList.transform);
+            OBJMarkerSettings.transform.SetParent(markerList.transform);            
         }
 
         /// <summary>
