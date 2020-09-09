@@ -30,6 +30,11 @@ public class MarkerIdObject
 
     public int getIdMarker(string key)
     {
+        if(ListObjectSelected.Count == 0)
+        {
+            return 0;
+        }
+
         return ListObjectSelected[key];
     }
 

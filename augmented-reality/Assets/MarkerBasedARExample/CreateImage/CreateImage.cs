@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CreateImage : MonoBehaviour
-{    
+{
     private GameObject buttonCreateImage;
     private GameObject[] listObjectSelecionado;
     private string nameBDWithQrCodePlayerPrefab;
@@ -49,22 +49,36 @@ public class CreateImage : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         ObjectScreenVisible(false);
-                        
+
         Texture2D imageTelaJogo = ScreenCapture.CaptureScreenshotAsTexture(2);
         imageTelaJogo.SetPixel(500, 500, Color.gray);
         imageTelaJogo.Apply();
 
-        imagePath = string.Concat(Application.persistentDataPath, Communs.FolderImagemDynamic, "image_screen.png");
+        string directory = Path.Combine(Application.persistentDataPath, Communs.FolderImagemDynamic);
+
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        string fileName = GetFilename();
+        imagePath = Path.Combine(directory, fileName);
 
         if (isWithQrCode)
         {
-            imagePath = string.Concat(Application.persistentDataPath, "/image_screen.png");
+            imagePath = Path.Combine(Application.persistentDataPath, fileName);
         }
-        
+
         SaveImage(imageTelaJogo, imagePath);
         SaveInformationObject();
 
         ObjectScreenVisible(true);
+    }
+
+    public string GetFilename()
+    {
+        string fileName = Path.GetRandomFileName().Replace(".", "").Substring(0, 8);
+        return string.Concat(fileName, ".png");
     }
 
     void SaveImage(Texture2D imageSave, string imagePath)
@@ -99,7 +113,7 @@ public class CreateImage : MonoBehaviour
             informationObject = new InformationObject();
             informationObject.Name = objectSelect.name;
             informationObject.ImagePathWithoutQrCode = imagePath;
-            informationObject.IdMeker = markerIdObject.getIdMarker(objectSelect.name);
+            informationObject.IdMarker = markerIdObject.getIdMarker(objectSelect.name);
             informationObject.Position = objectSelect.transform.position;
             informationObject.Rotation = objectSelect.transform.rotation;
             informationObject.Scale = objectSelect.transform.localScale;

@@ -8,12 +8,12 @@ namespace MenuPrincipal
 
         public void OnObjectCreateWithQrCodeButtonClick()
         {
-            SceneManager.LoadScene("Texture2DToMatExample");
+            SceneManager.LoadScene("ObjectSelectWithQrCodeScene");
         }
 
         public void OnObjectCreateWithoutQrCodeButtonClick()
         {
-            SceneManager.LoadScene("Texture2DToMatExample");
+            SceneManager.LoadScene("ObjectSelectWithoutQrCodeScene");
         }
 
         public void OnObjectsCreatedButtonClick()

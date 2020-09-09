@@ -7,7 +7,7 @@ public class Communs : MonoBehaviour
     public static string PathFBX = @"Assets\MarkerBasedARExample\FBX\";
     public static string ExtensionFBX = ".fbx";
     public static int DictionaryId = Aruco.DICT_ARUCO_ORIGINAL;
-    public static string FolderImagemDynamic = "/patternImg/";
+    public static string FolderImagemDynamic = "patternImg";
     public static string NameBDWithQrCodePlayerPrefab = "informationObjectWithQrCode";
     public static string NameBDWithoutQrCodePlayerPrefab = "informationObjectWithoutQrCode";
 }

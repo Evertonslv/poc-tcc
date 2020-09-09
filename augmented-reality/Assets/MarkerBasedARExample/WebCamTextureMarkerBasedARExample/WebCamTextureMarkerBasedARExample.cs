@@ -23,7 +23,7 @@ namespace MarkerBasedARExample
         /// <summary>
         /// The AR camera.
         /// </summary>
-        public Camera ARCamera;
+        Camera ARCamera;
 
         /// <summary>
         /// Gameobject armazenas os objetos 3D
@@ -129,6 +129,8 @@ namespace MarkerBasedARExample
         /// </summary>
         Mat patternMat;
 
+        bool existeObjetoDetectar = true;
+
         private void Awake()
         {
             markerList = GameObject.Find("/MarkerList");
@@ -140,8 +142,15 @@ namespace MarkerBasedARExample
         // Use this for initialization
         void Start ()
         {
+            GameObject cameraAR = GameObject.Find("ARCamera");
+            ARCamera = cameraAR.GetComponent<Camera>();
+
             patternTrackingInfo = new PatternTrackingInfo();
             markerSettingsList = markerList.transform.GetComponentsInChildren<MarkerSettings>();
+
+            if (markerSettingsList.Length == 0) {
+                existeObjetoDetectar = false;
+            }
 
             webCamTextureToMatHelper = gameObject.GetComponent<WebCamTextureToMatHelper>();
             webCamTextureToMatHelper.Initialize();
@@ -175,7 +184,7 @@ namespace MarkerBasedARExample
 
                         foreach (MarkerSettings settings in markerSettingsList)
                         {
-                            if (idMarker == settings.getId())
+                            if (idMarker > 0 && idMarker == settings.getId())
                             {
                                 GameObject ARGameObjectQrCode = settings.getARGameObject();
 
@@ -268,7 +277,13 @@ namespace MarkerBasedARExample
         void CreatComponentWithQrCode() {
             InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithQrCodePlayerPrefab));
 
-            foreach (InformationObject informationObject in informationObjectList.ListInformationObject) {
+            if (informationObjectList == null)
+            {
+                return;
+            }
+
+            foreach (InformationObject informationObject in informationObjectList.ListInformationObject)
+            {
                 CreateComponent(informationObject, null);
             }
         }
@@ -276,6 +291,11 @@ namespace MarkerBasedARExample
         void CreatComponentWithoutQrCode()
         {
             InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithoutQrCodePlayerPrefab));
+
+            if(informationObjectList == null)
+            {
+                return;
+            }
 
             foreach (InformationObject informationObject in informationObjectList.ListInformationObject)
             {
@@ -311,8 +331,8 @@ namespace MarkerBasedARExample
             OBJMarkerSettings.name = "MarkerSettings";
 
             MarkerDesign markerDesign = new MarkerDesign();
-            markerDesign.id = informationObject.IdMeker;
-
+            markerDesign.id = informationObject.IdMarker;
+            
             MarkerSettings markerSettings = OBJMarkerSettings.AddComponent<MarkerSettings>();
             markerSettings.PatternDetector = patternDetector;
             markerSettings.markerDesign = markerDesign;
@@ -331,11 +351,19 @@ namespace MarkerBasedARExample
 
             float widthScale = (Screen.width / rectTransform.rect.width) + 10;
             float heightScale = (Screen.height / rectTransform.rect.height) + 10;
-            objectCreated.transform.localScale = new Vector3(widthScale, heightScale);
+            objectCreated.transform.localScale = new Vector3(widthScale, heightScale, heightScale);
 
             objectCreated.transform.SetParent(ARObjects.transform);
             ARObjects.transform.SetParent(OBJMarkerSettings.transform);
             OBJMarkerSettings.transform.SetParent(markerList.transform);            
+        }
+
+        private void OnGUI()
+        {
+            if (!existeObjetoDetectar)
+            {
+                GUI.Box(new UnityEngine.Rect((Screen.width / 2) - 140, (Screen.height / 2) - 35, 280, 35), "Não existem objetos para ser detectados!");
+            }
         }
 
         /// <summary>

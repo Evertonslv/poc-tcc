@@ -5,15 +5,13 @@ using OpenCVForUnity.UnityUtils;
 using OpenCVMarkerBasedAR;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CreateMarker : MonoBehaviour
 {
     private int dictionaryId = Communs.DictionaryId;
-    private int markerSize = 100;
+    private int markerSize = 500;
     private Mat markerImage;
     private RawImage imageQrCode;
     private Texture2D texture;
@@ -43,9 +41,6 @@ public class CreateMarker : MonoBehaviour
         Utils.matToTexture2D(markerImage, texture, true, 0, true);
 
         imageQrCode.texture = texture;
-
-        string imagePath = Application.persistentDataPath + "/marker_" + markerId + ".png";
-        SaveImage(texture, imagePath);
     }
 
     private void ValidMarkerImage()
@@ -60,11 +55,5 @@ public class CreateMarker : MonoBehaviour
         {
             markerImage.setTo(Scalar.all(255));
         }
-    }
-
-    void SaveImage(Texture2D imageSave, string imagePath)
-    {
-        var bytes = imageSave.EncodeToPNG();
-        File.WriteAllBytes(imagePath, bytes);
     }
 }

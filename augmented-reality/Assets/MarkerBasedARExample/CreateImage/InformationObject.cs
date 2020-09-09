@@ -8,7 +8,7 @@ public class InformationObject
 {
     public string Name;
     public string ImagePathWithoutQrCode;
-    public int IdMeker;
+    public int IdMarker;
     public Vector3 Position;
     public Vector3 Scale;
     public Quaternion Rotation;
