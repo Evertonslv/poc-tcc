@@ -5,11 +5,11 @@ public class MarkerIdControl
 {
 	private InformationObjectList informationObjectList;
     private static MarkerIdControl Instance;
-    private int markerId = 1;
+    private int markerId = 0;
 
     private MarkerIdControl()
 	{
-		informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithQrCodePlayerPrefab));
+		informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(PropertiesModel.NameBDWithQrCodePlayerPrefab));
 
         if (informationObjectList != null)
         {

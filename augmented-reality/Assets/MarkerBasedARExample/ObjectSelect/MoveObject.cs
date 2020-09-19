@@ -38,7 +38,7 @@ public class MoveObject : MonoBehaviour
             //Se o ray acertar (hit) o Collider (não 2DCollider)
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.CompareTag(Communs.TagMoveObject))
+                if (hit.transform.CompareTag(PropertiesModel.TagMoveObject))
                 {
                     if (hit.rigidbody)
                     {

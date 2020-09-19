@@ -32,7 +32,7 @@ public class MarkerIdObject
     {
         if(ListObjectSelected.Count == 0)
         {
-            return 0;
+            return -1;
         }
 
         return ListObjectSelected[key];

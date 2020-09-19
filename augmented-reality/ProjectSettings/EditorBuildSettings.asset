@@ -6,14 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/MarkerBasedARExample/MarkerBasedARExample.unity
-  - enabled: 1
-    path: Assets/MarkerBasedARExample/ShowLicense.unity
-  - enabled: 1
-    path: Assets/MarkerBasedARExample/ShowARMarker.unity
-  - enabled: 1
-    path: Assets/MarkerBasedARExample/Texture2DMarkerBasedARExample/Texture2DMarkerBasedARExample.unity
+    path: Assets/MarkerBasedARExample/MenuPrincipal.unity
+    guid: c1089b6c5cb5b0742be92732f5bdc172
   - enabled: 1
     path: Assets/MarkerBasedARExample/WebCamTextureMarkerBasedARExample/WebCamTextureMarkerBasedARExample.unity
+    guid: 1255f55469112b948a6518ca82eeb35a
   - enabled: 1
-    path: Assets/MarkerBasedARExample/GyroSensorMarkerBasedARExample/GyroSensorMarkerBasedARExample.unity
+    path: Assets/MarkerBasedARExample/ObjectImport/ObjectImportScene.unity
+    guid: 8f4709008b6225e4d9633bd674f60725
+  - enabled: 1
+    path: Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectWithoutQrCodeScene.unity
+    guid: 8085d628822463b4c966df301e912e21
+  - enabled: 1
+    path: Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectWithQrCodeScene.unity
+    guid: dccf1bf32e92f1c4eb81c84272367c80
+  - enabled: 1
+    path: Assets/MarkerBasedARExample/ObjectSelect/ObjectList.unity
+    guid: 439f111c6086bc74d917adc3f3714277
+  m_configObjects: {}

@@ -153,9 +153,13 @@ namespace MarkerBasedARExample
             }
 
             webCamTextureToMatHelper = gameObject.GetComponent<WebCamTextureToMatHelper>();
+#if UNITY_ANDROID && !UNITY_EDITOR
+            // Avoids the front camera low light issue that occurs in only some Android devices (e.g. Google Pixel, Pixel2).
+            webCamTextureToMatHelper.avoidAndroidFrontCameraLowLightIssue = true;
+#endif
             webCamTextureToMatHelper.Initialize();
 
-            dictionaryAruco = Aruco.getPredefinedDictionary(Communs.DictionaryId);
+            dictionaryAruco = Aruco.getPredefinedDictionary(PropertiesModel.DictionaryId);
             cornersAruco = new List<Mat>();
             idsAruco = new Mat();
         }
@@ -184,13 +188,13 @@ namespace MarkerBasedARExample
 
                         foreach (MarkerSettings settings in markerSettingsList)
                         {
-                            if (idMarker > 0 && idMarker == settings.getId())
+                            if (idMarker != -1 && idMarker == settings.getId())
                             {
                                 GameObject ARGameObjectQrCode = settings.getARGameObject();
 
                                 if (ARGameObjectQrCode != null)
                                 {
-                                    EstimatePoseCanonicalMarker(rgbMat, ARGameObjectQrCode);
+                                    EstimatePoseMarker(rgbMat, ARGameObjectQrCode);
                                 }
                             }
                         }
@@ -213,7 +217,7 @@ namespace MarkerBasedARExample
 
                             if (ARGameObject != null)
                             {
-                                EstimatePoseCanonicalMarker(rgbMat, ARGameObject);
+                                EstimatePoseWithoutMarker(ARGameObject);
                             }
                         }
                     }
@@ -223,35 +227,33 @@ namespace MarkerBasedARExample
             }
         }
 
-        private void EstimatePoseCanonicalMarker(Mat rgbMat, GameObject ARGameObject)
+        private void EstimatePoseMarker(Mat rgbMat, GameObject ARGameObject)
         {
             Aruco.estimatePoseSingleMarkers(cornersAruco, markerLength, camMatrix, distCoeffs, rvecs, tvecs);
 
-            if (idsAruco.total() > 0)
+            for (int i = 0; i < idsAruco.total(); i++)
             {
-                for (int i = 0; i < idsAruco.total(); i++)
+                using (Mat rvec = new Mat(rvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
+                using (Mat tvec = new Mat(tvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
                 {
-                    using (Mat rvec = new Mat(rvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
-                    using (Mat tvec = new Mat(tvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
-                    {
-                        // In this example we are processing with RGB color image, so Axis-color correspondences are X: blue, Y: green, Z: red. (Usually X: red, Y: green, Z: blue)
-                        Calib3d.drawFrameAxes(rgbMat, camMatrix, distCoeffs, rvec, tvec, markerLength * 0.5f);
+                    // In this example we are processing with RGB color image, so Axis-color correspondences are X: blue, Y: green, Z: red. (Usually X: red, Y: green, Z: blue)
+                    Calib3d.drawFrameAxes(rgbMat, camMatrix, distCoeffs, rvec, tvec, markerLength * 0.5f);
 
-                        // This example can display the ARObject on only first detected marker.
-                        if (i == 0)
-                        {
-                            UpdateARObjectTransform(rvec, tvec, ARGameObject);
-                        }
+                    // This example can display the ARObject on only first detected marker.
+                    if (i == 0)
+                    {
+                        UpdateARObjectTransform(rvec, tvec, ARGameObject);
                     }
                 }
             }
-            else
-            {
-                ARM = ARCamera.transform.localToWorldMatrix * invertYM * transformationM * invertZM;
-                
-                ARGameObject.SetActive(true);
-                ARUtils.SetTransformFromMatrix(ARGameObject.transform, ref ARM);
-            }
+        }
+
+        private void EstimatePoseWithoutMarker(GameObject ARGameObject)
+        {
+            ARM = ARCamera.transform.localToWorldMatrix * invertYM * transformationM * invertZM;
+
+            ARGameObject.SetActive(true);
+            ARUtils.SetTransformFromMatrix(ARGameObject.transform, ref ARM);
         }
 
         private void UpdateARObjectTransform(Mat rvec, Mat tvec, GameObject ARGameObject)
@@ -265,17 +267,16 @@ namespace MarkerBasedARExample
 
             ARUtils.LowpassPoseData(ref oldPoseData, ref poseData, positionLowPass, rotationLowPass);
             oldPoseData = poseData;
-            
-            // Convert to transform matrix.
-            ARM = ARUtils.ConvertPoseDataToMatrix(ref poseData, true);
-            ARM = ARCamera.transform.localToWorldMatrix * ARM;
+
+            Matrix4x4 matrix = Matrix4x4.TRS(poseData.pos, poseData.rot, new Vector3(0.15f, 0.15f, 0.15f));
+            ARM = ARCamera.transform.localToWorldMatrix * invertYM * matrix * invertYM;
 
             ARGameObject.SetActive(true);
             ARUtils.SetTransformFromMatrix(ARGameObject.transform, ref ARM);
         }
 
         void CreatComponentWithQrCode() {
-            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithQrCodePlayerPrefab));
+            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(PropertiesModel.NameBDWithQrCodePlayerPrefab));
 
             if (informationObjectList == null)
             {
@@ -290,7 +291,7 @@ namespace MarkerBasedARExample
 
         void CreatComponentWithoutQrCode()
         {
-            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(Communs.NameBDWithoutQrCodePlayerPrefab));
+            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(PropertiesModel.NameBDWithoutQrCodePlayerPrefab));
 
             if(informationObjectList == null)
             {
@@ -338,8 +339,7 @@ namespace MarkerBasedARExample
             markerSettings.markerDesign = markerDesign;
             markerSettings.ARGameObject = ARObjects;
 
-            string pathFBX = string.Concat(Communs.PathFBX, informationObject.Name, Communs.ExtensionFBX);
-            GameObject objectAR = Import.FBX(pathFBX);
+            GameObject objectAR = Import.GetGameObjectResources(informationObject.Name);
             GameObject objectCreated = Instantiate(objectAR);
 
             objectCreated.AddComponent<RectTransform>();
@@ -347,11 +347,11 @@ namespace MarkerBasedARExample
             objectCreated.transform.rotation = Quaternion.identity;
             objectCreated.layer = 8;
 
-            RectTransform rectTransform = objectCreated.GetComponent<RectTransform>();
+            //RectTransform rectTransform = objectCreated.GetComponent<RectTransform>();
 
-            float widthScale = (Screen.width / rectTransform.rect.width) + 10;
-            float heightScale = (Screen.height / rectTransform.rect.height) + 10;
-            objectCreated.transform.localScale = new Vector3(widthScale, heightScale, heightScale);
+            //float widthScale = (Screen.width / rectTransform.rect.width) + 10;
+            //float heightScale = (Screen.height / rectTransform.rect.height) + 10;
+            //objectCreated.transform.localScale = new Vector3(widthScale, heightScale, heightScale);
 
             objectCreated.transform.SetParent(ARObjects.transform);
             ARObjects.transform.SetParent(OBJMarkerSettings.transform);

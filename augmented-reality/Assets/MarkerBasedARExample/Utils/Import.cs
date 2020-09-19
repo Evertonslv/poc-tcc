@@ -1,21 +1,15 @@
-﻿using UnityEditor;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Import
 {    
-    public static GameObject FBX(string path) 
+    public static GameObject GetGameObjectResources(string nameObject) 
     {
-        return AssetDatabase.LoadAssetAtPath<GameObject>(path);
+        return Resources.Load<GameObject>(nameObject);
     }
 
-    public static void Package(string path)
+    public static GameObject[] GetListGameObjectResources()
     {
-        AssetDatabase.ImportPackage(path, false);
+        return Resources.LoadAll<GameObject>("");
     }
 
-    public static void MoveAsset(string oldPath, string newPath)
-    {
-        AssetDatabase.MoveAsset(oldPath, newPath);
-    }
 }

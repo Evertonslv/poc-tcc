@@ -1,8 +1,4 @@
-﻿using Boo.Lang;
-using OpenCVForUnity.UnityUtils;
-using System;
-using System.Collections;
-using System.Globalization;
+﻿using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,8 +16,8 @@ public class CreateImage : MonoBehaviour
 
     private void Awake()
     {
-        nameBDWithQrCodePlayerPrefab = Communs.NameBDWithQrCodePlayerPrefab;
-        nameBDWithoutQrCodePlayerPrefab = Communs.NameBDWithoutQrCodePlayerPrefab;
+        nameBDWithQrCodePlayerPrefab = PropertiesModel.NameBDWithQrCodePlayerPrefab;
+        nameBDWithoutQrCodePlayerPrefab = PropertiesModel.NameBDWithoutQrCodePlayerPrefab;
 
         //PlayerPrefs.DeleteAll();
         informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(nameBDWithQrCodePlayerPrefab));
@@ -34,7 +30,7 @@ public class CreateImage : MonoBehaviour
 
     private void Start()
     {
-        listObjectSelecionado = GameObject.FindGameObjectsWithTag(Communs.TagMoveObject);
+        listObjectSelecionado = GameObject.FindGameObjectsWithTag(PropertiesModel.TagMoveObject);
         buttonCreateImage = GameObject.Find("/Canvas/btnCreateImage");
     }
 
@@ -54,7 +50,7 @@ public class CreateImage : MonoBehaviour
         imageTelaJogo.SetPixel(500, 500, Color.gray);
         imageTelaJogo.Apply();
 
-        string directory = Path.Combine(Application.persistentDataPath, Communs.FolderImagemDynamic);
+        string directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamic);
 
         if (!Directory.Exists(directory))
         {

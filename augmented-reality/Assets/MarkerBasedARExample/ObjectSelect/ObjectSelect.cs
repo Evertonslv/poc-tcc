@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Assets.MarkerBasedARExample.ObjectSelect;
 using UnityEngine;
 
 public class ObjectSelect : MonoBehaviour
@@ -11,13 +11,20 @@ public class ObjectSelect : MonoBehaviour
     {
         objectList = GameObject.Find("/ListObject");
         markerIdObject = MarkerIdObject.GetInstance();
+        GameObject objectSelected;
 
-        GameObject objectSelected = SelectObject("Sledge.fbx");
-        //GameObject objectSelected1 = SelectObject("Gift1.fbx");
-
+        if (PropertiesModel.NameObjectSelected == null)
+        {
+            objectSelected = SelectObject("Sledge");
+        }
+        else
+        {
+            objectSelected = SelectObject(PropertiesModel.NameObjectSelected);
+        }
+        
         if (gameObject.scene.name == "ObjectSelectWithoutQrCodeScene")
         {
-            CreateObject(objectSelected);
+            ObjectCreate(objectSelected);
         }
         else
         {
@@ -27,30 +34,20 @@ public class ObjectSelect : MonoBehaviour
 
     }
 
-    private GameObject SelectObject(string nomeObject)
+    private GameObject SelectObject(string nameObject)
     {
-        string objPath2 = string.Concat(Communs.PathFBX, nomeObject);
-        return Import.FBX(objPath2);
+        return Import.GetGameObjectResources(nameObject);
     }
 
-    private void CreateObject(GameObject objectSelected)
+    private void ObjectCreate(GameObject objectSelected)
     {
-        Quaternion rotation = Quaternion.identity;
-        Vector3 position = Vector3.zero;
-
-        objectCreated = Instantiate(objectSelected, position, rotation);
-        objectCreated.name = objectSelected.name;
-
-        objectCreated.AddComponent(typeof(MeshCollider));
-        objectCreated.AddComponent(typeof(Rigidbody));
-        objectCreated.GetComponent<Rigidbody>().isKinematic = true;
-        objectCreated.tag = Communs.TagMoveObject;
+        objectCreated = CreateObject.Create(objectSelected);
         objectCreated.transform.SetParent(objectList.transform);
     }
 
     private void CreateObjectWithIdMarker(GameObject objectSelected, int id)
     {
-        CreateObject(objectSelected);
+        ObjectCreate(objectSelected);
         markerIdObject.add(objectCreated.name, id);
     }
 }
