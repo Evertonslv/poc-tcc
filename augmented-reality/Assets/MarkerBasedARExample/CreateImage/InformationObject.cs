@@ -7,7 +7,7 @@ using UnityEngine;
 public class InformationObject
 {
     public string Name;
-    public string ImagePathWithoutQrCode;
+    public string ImagePathMarkerLess;
     public int IdMarker;
     public Vector3 Position;
     public Vector3 Scale;

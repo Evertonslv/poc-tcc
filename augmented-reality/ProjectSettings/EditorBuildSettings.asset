@@ -15,12 +15,15 @@ EditorBuildSettings:
     path: Assets/MarkerBasedARExample/ObjectImport/ObjectImportScene.unity
     guid: 8f4709008b6225e4d9633bd674f60725
   - enabled: 1
-    path: Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectWithoutQrCodeScene.unity
+    path: Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectMarkerLessScene.unity
     guid: 8085d628822463b4c966df301e912e21
   - enabled: 1
-    path: Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectWithQrCodeScene.unity
+    path: Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectMarkerScene.unity
     guid: dccf1bf32e92f1c4eb81c84272367c80
   - enabled: 1
     path: Assets/MarkerBasedARExample/ObjectSelect/ObjectList.unity
     guid: 439f111c6086bc74d917adc3f3714277
+  - enabled: 1
+    path: Assets/MarkerBasedARExample/Drawing/WebCamDrawingScene.unity
+    guid: bc8229d8f1674d3409d1bbd19ce5d282
   m_configObjects: {}

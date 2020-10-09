@@ -368,7 +368,7 @@ namespace OpenCVMarkerLessAR
         
             if (enableRatioTest) {
                 // To avoid NaN's when best match has zero distance we will use inversed ratio. 
-                float minRatio = 1.0f / 1.5f;
+                float minRatio = 1.2f / 1.5f;
 
                 // KNN match will return 2 nearest matches for each query descriptor
                 m_matcher.knnMatch (queryDescriptors, m_knnMatches, 2);
@@ -422,7 +422,7 @@ namespace OpenCVMarkerLessAR
         {
 //              Debug.Log ("matches " + matches.ToString ());
 
-            int minNumberMatchesAllowed = 8;
+            int minNumberMatchesAllowed = 10;
 
             List<KeyPoint> queryKeypointsList = queryKeypoints.toList ();
             List<KeyPoint> trainKeypointsList = trainKeypoints.toList ();
@@ -453,9 +453,9 @@ namespace OpenCVMarkerLessAR
                         
                 Calib3d.findHomography (srcPoints, 
                     dstPoints, 
-                    Calib3d.FM_RANSAC, 
+                    Calib3d.FM_LMEDS, 
                     reprojectionThreshold, 
-                    inliersMask, 2000, 0.955).copyTo (homography);
+                    inliersMask, 2000, 0.9).copyTo (homography);
 
                 if (homography.rows () != 3 || homography.cols () != 3)
                     return false;

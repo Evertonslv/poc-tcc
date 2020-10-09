@@ -46,6 +46,11 @@ namespace MarkerBasedARExample
         MatOfDouble distCoeffs;
 
         /// <summary>
+        /// The dist coeffs.
+        /// </summary>
+        MatOfDouble distCoeffsMarkerLess;
+
+        /// <summary>
         /// The marker detector.
         /// </summary>
         MarkerDetector markerDetector;
@@ -64,11 +69,6 @@ namespace MarkerBasedARExample
         /// The transformation matrix.
         /// </summary>
         Matrix4x4 transformationM;
-
-        /// <summary>
-        /// The transformation matrix for AR.
-        /// </summary>
-        Matrix4x4 ARM;
 
         /// <summary>
         /// The webcam texture to mat helper.
@@ -131,12 +131,15 @@ namespace MarkerBasedARExample
 
         bool existeObjetoDetectar = true;
 
+        MarkerSettings markerSettingsMarkerLessActual;
+        MarkerSettings markerSettingsMarkerActual;
+
         private void Awake()
         {
             markerList = GameObject.Find("/MarkerList");
             
-            CreatComponentWithQrCode();
-            CreatComponentWithoutQrCode();            
+            CreatComponentMarker();
+            CreatComponentMarkerLess();            
         }
 
         // Use this for initialization
@@ -144,6 +147,8 @@ namespace MarkerBasedARExample
         {
             GameObject cameraAR = GameObject.Find("ARCamera");
             ARCamera = cameraAR.GetComponent<Camera>();
+            markerSettingsMarkerLessActual = null;
+            markerSettingsMarkerActual = null;
 
             patternTrackingInfo = new PatternTrackingInfo();
             markerSettingsList = markerList.transform.GetComponentsInChildren<MarkerSettings>();
@@ -176,58 +181,104 @@ namespace MarkerBasedARExample
                 {
                     settings.setAllARGameObjectsDisable();
                 }
-                
+
                 Aruco.detectMarkers(rgbMat, dictionaryAruco, cornersAruco, idsAruco);
 
                 if (idsAruco.total() > 0)
                 {
-                    for (int i = 0; i < idsAruco.cols(); i++)
-                    {
-                        int idMarker = (int)idsAruco.get(0, i)[0];
-                        Debug.Log(idMarker);
-
-                        foreach (MarkerSettings settings in markerSettingsList)
-                        {
-                            if (idMarker != -1 && idMarker == settings.getId())
-                            {
-                                GameObject ARGameObjectQrCode = settings.getARGameObject();
-
-                                if (ARGameObjectQrCode != null)
-                                {
-                                    EstimatePoseMarker(rgbMat, ARGameObjectQrCode);
-                                }
-                            }
-                        }
-                    }
+                    SetMarker();
                 }
                 else
                 {
-                    foreach (MarkerSettings settings in markerSettingsList)
-                    {
-                        PatternDetector patternDetector = settings.GetPatternDetector();
-
-                        if (patternDetector != null && patternDetector.findPattern(rgbMat, patternTrackingInfo))
-                        {
-                            Debug.Log("Encontrou imagem");
-
-                            patternTrackingInfo.computePose(pattern, camMatrix, distCoeffs);
-                            transformationM = patternTrackingInfo.pose3d;
-
-                            GameObject ARGameObject = settings.getARGameObject();
-
-                            if (ARGameObject != null)
-                            {
-                                EstimatePoseWithoutMarker(ARGameObject);
-                            }
-                        }
-                    }
+                    SetMarkerLess();       
                 }
 
                 Utils.fastMatToTexture2D(rgbaMat, texture);
             }
         }
 
-        private void EstimatePoseMarker(Mat rgbMat, GameObject ARGameObject)
+        private void SetMarkerLess()
+        {
+            if (markerSettingsMarkerLessActual != null && markerSettingsMarkerLessActual.GetPatternDetector().findPattern(rgbMat, patternTrackingInfo))
+            {
+                ShowGameObjectMarkerLess();
+            }
+            else
+            {
+                markerSettingsMarkerLessActual = null;
+
+                foreach (MarkerSettings markerSettings in markerSettingsList)
+                {
+                    PatternDetector patternDetector = markerSettings.GetPatternDetector();
+
+                    if (patternDetector != null && patternDetector.findPattern(rgbMat, patternTrackingInfo))
+                    {
+                        markerSettingsMarkerLessActual = markerSettings;
+                        ShowGameObjectMarkerLess();
+                    }
+                }
+            }
+        }
+
+        private void ShowGameObjectMarkerLess()
+        {
+            GameObject ARGameObject = markerSettingsMarkerLessActual.getARGameObject();
+
+            if (ARGameObject != null)
+            {
+                EstimatePoseMarkerLess(ARGameObject);
+            }
+        }
+
+        private void EstimatePoseMarkerLess(GameObject ARGameObject)
+        {
+            patternTrackingInfo.computePose(pattern, camMatrix, distCoeffsMarkerLess, rgbMat);
+            
+            transformationM = patternTrackingInfo.pose3d;
+            Matrix4x4 ARM = ARCamera.transform.localToWorldMatrix * invertYM * transformationM * invertYM;
+
+            ARUtils.SetTransformFromMatrix(ARGameObject.transform, ref ARM);
+            ARGameObject.SetActive(true);
+        }
+
+        private void SetMarker()
+        {
+            for (int i = 0; i < idsAruco.cols(); i++)
+            {
+                int idMarker = (int)idsAruco.get(0, i)[0];
+                Debug.Log(idMarker);
+
+                if (markerSettingsMarkerActual != null && markerSettingsMarkerActual.getId() == idMarker)
+                {
+                    ShowGameObjectMarker();
+                }
+                else
+                {
+                    markerSettingsMarkerActual = null;
+
+                    foreach (MarkerSettings markerSettings in markerSettingsList)
+                    {
+                        if (idMarker != -1 && idMarker == markerSettings.getId())
+                        {
+                            markerSettingsMarkerActual = markerSettings;
+                            ShowGameObjectMarker();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ShowGameObjectMarker()
+        {
+            GameObject ARGameObjectQrCode = markerSettingsMarkerActual.getARGameObject();
+
+            if (ARGameObjectQrCode != null)
+            {
+                EstimatePoseMarker(ARGameObjectQrCode);
+            }
+        }
+
+        private void EstimatePoseMarker(GameObject ARGameObject)
         {
             Aruco.estimatePoseSingleMarkers(cornersAruco, markerLength, camMatrix, distCoeffs, rvecs, tvecs);
 
@@ -236,24 +287,12 @@ namespace MarkerBasedARExample
                 using (Mat rvec = new Mat(rvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
                 using (Mat tvec = new Mat(tvecs, new OpenCVForUnity.CoreModule.Rect(0, i, 1, 1)))
                 {
-                    // In this example we are processing with RGB color image, so Axis-color correspondences are X: blue, Y: green, Z: red. (Usually X: red, Y: green, Z: blue)
-                    Calib3d.drawFrameAxes(rgbMat, camMatrix, distCoeffs, rvec, tvec, markerLength * 0.5f);
-
-                    // This example can display the ARObject on only first detected marker.
                     if (i == 0)
                     {
                         UpdateARObjectTransform(rvec, tvec, ARGameObject);
                     }
                 }
             }
-        }
-
-        private void EstimatePoseWithoutMarker(GameObject ARGameObject)
-        {
-            ARM = ARCamera.transform.localToWorldMatrix * invertYM * transformationM * invertZM;
-
-            ARGameObject.SetActive(true);
-            ARUtils.SetTransformFromMatrix(ARGameObject.transform, ref ARM);
         }
 
         private void UpdateARObjectTransform(Mat rvec, Mat tvec, GameObject ARGameObject)
@@ -269,14 +308,14 @@ namespace MarkerBasedARExample
             oldPoseData = poseData;
 
             Matrix4x4 matrix = Matrix4x4.TRS(poseData.pos, poseData.rot, new Vector3(0.15f, 0.15f, 0.15f));
-            ARM = ARCamera.transform.localToWorldMatrix * invertYM * matrix * invertYM;
+            Matrix4x4 ARM = ARCamera.transform.localToWorldMatrix * invertYM * matrix * invertYM;
 
             ARGameObject.SetActive(true);
             ARUtils.SetTransformFromMatrix(ARGameObject.transform, ref ARM);
         }
 
-        void CreatComponentWithQrCode() {
-            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(PropertiesModel.NameBDWithQrCodePlayerPrefab));
+        void CreatComponentMarker() {
+            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(PropertiesModel.NameBDMarkerPlayerPrefab));
 
             if (informationObjectList == null)
             {
@@ -289,9 +328,9 @@ namespace MarkerBasedARExample
             }
         }
 
-        void CreatComponentWithoutQrCode()
+        void CreatComponentMarkerLess()
         {
-            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(PropertiesModel.NameBDWithoutQrCodePlayerPrefab));
+            InformationObjectList informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(PropertiesModel.NameBDMarkerLessPlayerPrefab));
 
             if(informationObjectList == null)
             {
@@ -300,17 +339,10 @@ namespace MarkerBasedARExample
 
             foreach (InformationObject informationObject in informationObjectList.ListInformationObject)
             {
-                patternMat = Imgcodecs.imread(informationObject.ImagePathWithoutQrCode);
+                patternMat = Imgcodecs.imread(informationObject.ImagePathMarkerLess);
 
                 if (patternMat.total() > 0)
-                {
-                    Imgproc.cvtColor(patternMat, patternMat, Imgproc.COLOR_BGR2RGB);
-
-                    Texture2D patternTexture = new Texture2D(patternMat.width(), patternMat.height(), TextureFormat.RGBA32, false);
-
-                    //To reuse mat, set the flipAfter flag to true.
-                    Utils.matToTexture2D(patternMat, patternTexture, true, 0, true);
-                    
+                {                    
                     pattern = new Pattern();
 
                     PatternDetector patternDetector = new PatternDetector(null, null, null, true);
@@ -346,12 +378,6 @@ namespace MarkerBasedARExample
             objectCreated.transform.position = Vector3.zero;
             objectCreated.transform.rotation = Quaternion.identity;
             objectCreated.layer = 8;
-
-            //RectTransform rectTransform = objectCreated.GetComponent<RectTransform>();
-
-            //float widthScale = (Screen.width / rectTransform.rect.width) + 10;
-            //float heightScale = (Screen.height / rectTransform.rect.height) + 10;
-            //objectCreated.transform.localScale = new Vector3(widthScale, heightScale, heightScale);
 
             objectCreated.transform.SetParent(ARObjects.transform);
             ARObjects.transform.SetParent(OBJMarkerSettings.transform);
@@ -409,7 +435,8 @@ namespace MarkerBasedARExample
             camMatrix.put(2, 2, 1.0f);
             
             distCoeffs = new MatOfDouble(0, 0, 0, 0);
-           
+            distCoeffsMarkerLess = new MatOfDouble(0, 0, 0, 0);
+
             //calibration camera
             Size imageSize = new Size(width * imageSizeScale, height * imageSizeScale);
             double apertureWidth = 0;
@@ -437,8 +464,6 @@ namespace MarkerBasedARExample
             for (int i = 0; i < markerDesigns.Length; i++) {
                 markerDesigns [i] = markerSettingsList[i].markerDesign;
             }
-
-            markerDetector = new MarkerDetector (camMatrix, distCoeffs, markerDesigns);
 
             rvecs = new Mat();
             tvecs = new Mat();

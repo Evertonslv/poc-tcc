@@ -9,7 +9,7 @@ public class MarkerIdControl
 
     private MarkerIdControl()
 	{
-		informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(PropertiesModel.NameBDWithQrCodePlayerPrefab));
+		informationObjectList = JsonUtility.FromJson<InformationObjectList>(PlayerPrefs.GetString(PropertiesModel.NameBDMarkerPlayerPrefab));
 
         if (informationObjectList != null)
         {

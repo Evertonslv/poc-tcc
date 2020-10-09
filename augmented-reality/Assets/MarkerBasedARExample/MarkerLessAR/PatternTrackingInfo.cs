@@ -43,26 +43,26 @@ namespace OpenCVMarkerLessAR
         /// <param name="pattern">Pattern.</param>
         /// <param name="camMatrix">Cam matrix.</param>
         /// <param name="distCoeff">Dist coeff.</param>
-        public void computePose (Pattern pattern, Mat camMatrix, MatOfDouble distCoeff)
+        public void computePose (Pattern pattern, Mat camMatrix, MatOfDouble distCoeff, Mat image)
         {
             Mat Rvec = new Mat ();
             Mat Tvec = new Mat ();
             Mat raux = new Mat ();
             Mat taux = new Mat ();
-        
+                        
             Calib3d.solvePnP (pattern.points3d, points2d, camMatrix, distCoeff, raux, taux);
             raux.convertTo (Rvec, CvType.CV_32F);
             taux.convertTo (Tvec, CvType.CV_32F);
         
-            Mat rotMat = new Mat (3, 3, CvType.CV_64FC1); 
+            Mat rotMat = new Mat (3, 3, CvType.CV_64FC1);
             Calib3d.Rodrigues (Rvec, rotMat);
 
-            pose3d.SetRow (0, new Vector4 ((float)rotMat.get (0, 0) [0], (float)rotMat.get (0, 1) [0], (float)rotMat.get (0, 2) [0], (float)Tvec.get (0, 0) [0]));
-            pose3d.SetRow (1, new Vector4 ((float)rotMat.get (1, 0) [0], (float)rotMat.get (1, 1) [0], (float)rotMat.get (1, 2) [0], (float)Tvec.get (1, 0) [0]));
-            pose3d.SetRow (2, new Vector4 ((float)rotMat.get (2, 0) [0], (float)rotMat.get (2, 1) [0], (float)rotMat.get (2, 2) [0], (float)Tvec.get (2, 0) [0]));
-            pose3d.SetRow (3, new Vector4 (0, 0, 0, 1));
+            pose3d.SetRow(0, new Vector4((float)rotMat.get(0, 0)[0], (float)rotMat.get(0, 1)[0], (float)rotMat.get(0, 2)[0], (float)Tvec.get(0, 0)[0]));
+            pose3d.SetRow(1, new Vector4((float)rotMat.get(1, 0)[0], (float)rotMat.get(1, 1)[0], (float)rotMat.get(1, 2)[0], (float)Tvec.get(1, 0)[0]));
+            pose3d.SetRow(2, new Vector4((float)rotMat.get(2, 0)[0], (float)rotMat.get(2, 1)[0], (float)rotMat.get(2, 2)[0], (float)Tvec.get(2, 0)[0]));
+            pose3d.SetRow(3, new Vector4(0, 0, 0, 1));
 
-//      Debug.Log ("pose3d " + pose3d.ToString ());
+            Debug.Log ("pose3d " + pose3d.ToString ());
 
             Rvec.Dispose ();
             Tvec.Dispose ();
@@ -83,7 +83,7 @@ namespace OpenCVMarkerLessAR
             List<Point> points2dList = points2d.toList ();
 
             for (int i = 0; i < points2dList.Count; i++) {
-                Imgproc.line (image, points2dList [i], points2dList [(i + 1) % points2dList.Count], color, 2, Imgproc.LINE_AA, 0);
+                Imgproc.line (image, points2dList [i], points2dList [(i + 1) % points2dList.Count], color, 2, Imgproc.LINE_AA);
             }
         }
     }

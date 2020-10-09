@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/MarkerBasedARExample/WebCamTextureMarkerBasedARExample/WebCamTextureMarkerBasedARExample.unity
+- path: Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectMarkerLessScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
