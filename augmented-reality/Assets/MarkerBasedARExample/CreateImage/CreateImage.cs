@@ -65,7 +65,7 @@ public class CreateImage : MonoBehaviour
         ObjectScreenVisible(false);
 
         // Captura imagem da tela
-        Texture2D screenImageTexture = ScreenCapture.CaptureScreenshotAsTexture(4);
+        Texture2D screenImageTexture = ScreenCapture.CaptureScreenshotAsTexture(2);
         
         // Converte de Texture para Mat do OpenCV
         Mat screenImageMat = new Mat(screenImageTexture.height, screenImageTexture.width, CvType.CV_8UC4);

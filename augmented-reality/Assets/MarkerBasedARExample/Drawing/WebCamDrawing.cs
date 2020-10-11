@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.UnityUtils;
@@ -115,6 +116,9 @@ namespace Drawing
         /// </summary>
         public float rotationLowPass = 2f;
 
+        private int screenWidth;
+        private int screenHeight;
+
         // Use this for initialization
         void Start ()
         {
@@ -129,14 +133,18 @@ namespace Drawing
 #endif
             webCamTextureToMatHelper.Initialize();
 
-            RawImage textuteTransparent = FindObjectOfType<RawImage>();
-            textuteTransparent.texture = GetTransparentTexture();
+            Texture2D transparentTexture = GetTransparentTexture();
+            
+            RawImage imageTransparent = FindObjectOfType<RawImage>();
+            imageTransparent.texture = transparentTexture;
+            
+            imageTransparent.rectTransform.sizeDelta = new Vector2(
+                transparentTexture.width, transparentTexture.height);
         }
 
         public Texture2D GetTransparentTexture()
         {
             Color transparentColor = new Color(1.0f, 1.0f, 1.0f, 0f);
-            
             Texture2D texture = LoadTexture2D();
 
             for (int y = 0; y < texture.height; y++)
@@ -159,6 +167,9 @@ namespace Drawing
             Texture2D Texture = null;
             byte[] fileData;
 
+            // PropertiesModel.PathObjectDrawing =
+            //     "C:\\Users\\evert\\AppData\\LocalLow\\DefaultCompany\\01-poc-tcc-3d-object-replacement\\patternImg\\klpyn38d.png";
+            
             if (File.Exists(PropertiesModel.PathObjectDrawing))
             {
                 fileData = File.ReadAllBytes(PropertiesModel.PathObjectDrawing);
@@ -168,8 +179,7 @@ namespace Drawing
 
             return Texture;
         }
-
-        // Update is called once per frame
+        
         void Update()
         {
             if (webCamTextureToMatHelper.IsPlaying() && webCamTextureToMatHelper.DidUpdateThisFrame())
@@ -183,8 +193,6 @@ namespace Drawing
         /// Raises the web cam texture to mat helper initialized event.
         /// </summary>
         public void OnWebCamTextureToMatHelperInitialized() {
-            Debug.Log("OnWebCamTextureToMatHelperInitialized");
-            
             Mat webCamTextureMat = webCamTextureToMatHelper.GetMat();
 
             texture = new Texture2D(webCamTextureMat.cols(), webCamTextureMat.rows(), TextureFormat.RGBA32, false);
