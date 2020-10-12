@@ -15,9 +15,9 @@ public class ObjectSelect : MonoBehaviour
 
         if (PropertiesModel.NameObjectSelected == null)
         {
-            objectSelected = SelectObject("Gift1");
+            // objectSelected = SelectObject("Gift1");
             // objectSelected = SelectObject("TreeStump");
-            // objectSelected = SelectObject("Sledge");
+            objectSelected = SelectObject("Sledge");
             //objectSelected = SelectObject("Cube");
         }
         else

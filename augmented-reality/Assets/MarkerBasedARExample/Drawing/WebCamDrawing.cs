@@ -11,6 +11,7 @@ using OpenCVForUnity.ArucoModule;
 using OpenCVMarkerLessAR;
 using OpenCVForUnity.ImgcodecsModule;
 using System.IO;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Drawing
@@ -289,6 +290,11 @@ namespace Drawing
         /// </summary>
         void OnDestroy () {
             webCamTextureToMatHelper.Dispose ();
+        }
+        
+        public void onBackMainMenu()
+        {
+            SceneManager.LoadScene("MainMenuScene");
         }
     }
 }

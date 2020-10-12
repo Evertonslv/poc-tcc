@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectMarkerLessScene.unity
+- path: Assets/MarkerBasedARExample/Drawing/WebCamDrawingScene.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

@@ -10,6 +10,7 @@ using OpenCVForUnity.ArucoModule;
 using OpenCVMarkerLessAR;
 using OpenCVForUnity.ImgcodecsModule;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 namespace MarkerBasedARExample
 {
@@ -388,7 +389,7 @@ namespace MarkerBasedARExample
         {
             if (!existeObjetoDetectar)
             {
-                GUI.Box(new UnityEngine.Rect((Screen.width / 2) - 140, (Screen.height / 2) - 35, 280, 35), "Não existem objetos para ser detectados!");
+                GUI.Box(new UnityEngine.Rect((Screen.width / 2) - 180, (Screen.height / 2) - 70, 360, 70), "Não existem objetos para ser detectados!");
             }
         }
 
@@ -499,6 +500,11 @@ namespace MarkerBasedARExample
         /// </summary>
         void OnDestroy () {
             webCamTextureToMatHelper.Dispose ();
+        }
+
+        public void onBackMainMenu()
+        {
+            SceneManager.LoadScene("MainMenuScene");
         }
     }
 }

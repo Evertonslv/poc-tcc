@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/MarkerBasedARExample/MenuPrincipal.unity
+    path: Assets/MarkerBasedARExample/MainMenuScene.unity
     guid: c1089b6c5cb5b0742be92732f5bdc172
   - enabled: 1
     path: Assets/MarkerBasedARExample/WebCamTextureMarkerBasedARExample/WebCamTextureMarkerBasedARExample.unity

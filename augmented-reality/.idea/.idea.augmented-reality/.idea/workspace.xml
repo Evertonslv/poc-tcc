@@ -25,42 +25,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="164c7d7f-3340-48f2-9e31-3304c2e73a1b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/CandyCane.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/CandyCane.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift1 Blue.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift1 Blue.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift2 Blue.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift2 Blue.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift2 Green.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift2 Green.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift2 Red.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift2 Red.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift3 Gold.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift3 Gold.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift3 Red.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Gift3 Red.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutcracker Black.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutcracker Black.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutcracker Red.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutcracker Red.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutcracker Skin.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutcracker Skin.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutcracker White.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutcracker White.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/NutcrackerBrown.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/NutcrackerBrown.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutracker Gold.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Nutracker Gold.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Sledge Gold.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Sledge Gold.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Sledge Red.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Sledge Red.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Sledge Wood.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Sledge Wood.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Snowman.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Snowman.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Brown.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Brown.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Decoration White.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Decoration White.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Green.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Green.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Lights.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Lights.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Snow.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Snow.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Stars Gold.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/Materials/Tree Stars Gold.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BrokenVector/LowPolyWinterPack/Models/TreeDecorated.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.augmented-reality/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.augmented-reality/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.augmented-reality/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.augmented-reality/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/CreateImage/CreateImage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MarkerBasedARExample/CreateImage/CreateImage.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/Drawing/WebCamDrawing.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MarkerBasedARExample/Drawing/WebCamDrawing.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/Drawing/WebCamDrawingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MarkerBasedARExample/Drawing/WebCamDrawingScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/MenuPrincipal.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/MenuPrincipal.unity" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/ObjectSelect/ObjectSelect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MarkerBasedARExample/ObjectSelect/ObjectSelect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/Prefabs/Flat_Cactus_02.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MarkerBasedARExample/Prefabs/Flat_Cactus_02.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/Resources/Gift3.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/Resources/TreeGlowing.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/APIUpdater/project-dependencies.graph" beforeDir="false" afterPath="$PROJECT_DIR$/Library/APIUpdater/project-dependencies.graph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectMarkerLessScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectMarkerLessScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectMarkerScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectMarkerScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/WebCamTextureMarkerBasedARExample/WebCamTextureMarkerBasedARExample.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MarkerBasedARExample/WebCamTextureMarkerBasedARExample/WebCamTextureMarkerBasedARExample.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MarkerBasedARExample/WebCamTextureMarkerBasedARExample/WebCamTextureMarkerBasedARExample.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MarkerBasedARExample/WebCamTextureMarkerBasedARExample/WebCamTextureMarkerBasedARExample.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ArtifactDB" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ArtifactDB" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/ArtifactDB-lock" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ArtifactDB-lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/CurrentLayout-default.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/Library/CurrentLayout-default.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/EditorUserBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Library/EditorUserBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Library/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/InspectorExpandedItems.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Library/InspectorExpandedItems.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/LastBuild.buildreport" beforeDir="false" afterPath="$PROJECT_DIR$/Library/LastBuild.buildreport" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/LastSceneManagerSetup.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Library/LastSceneManagerSetup.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/Managed/Assembly-CSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/Managed/Assembly-CSharp.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/Managed/Unity.TextMeshPro.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/Managed/Unity.TextMeshPro.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/Managed/Unity.Timeline.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/Managed/Unity.Timeline.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/Managed/UnityEngine.UI.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/Managed/UnityEngine.UI.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/boot.config" beforeDir="false" afterPath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/boot.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/data.unity3d" beforeDir="false" afterPath="$PROJECT_DIR$/Library/PlayerDataCache/Android/Data/data.unity3d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/PlayerDataCache/Android/ScriptsOnlyCache.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Library/PlayerDataCache/Android/ScriptsOnlyCache.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp-Editor.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Assembly-CSharp.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll" afterDir="false" />
@@ -74,11 +64,15 @@
       <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UnityEditor.UI.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UnityEditor.UI.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UnityEngine.TestRunner.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UnityEngine.TestRunner.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/ScriptAssemblies/UnityEngine.UI.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptAssemblies/UnityEngine.UI.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ScriptMapper" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ScriptMapper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/ShaderCache/EditorEncounteredVariants" beforeDir="false" afterPath="$PROJECT_DIR$/Library/ShaderCache/EditorEncounteredVariants" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/SourceAssetDB" beforeDir="false" afterPath="$PROJECT_DIR$/Library/SourceAssetDB" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/SourceAssetDB-lock" beforeDir="false" afterPath="$PROJECT_DIR$/Library/SourceAssetDB-lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/StateCache/Hierarchy/8951cb-mainStage.json" beforeDir="false" afterPath="$PROJECT_DIR$/Library/StateCache/Hierarchy/8951cb-mainStage.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/StateCache/SceneView/040f2f-mainStage.json" beforeDir="false" afterPath="$PROJECT_DIR$/Library/StateCache/SceneView/040f2f-mainStage.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Library/expandedItems" beforeDir="false" afterPath="$PROJECT_DIR$/Library/expandedItems" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,9 +85,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/MarkerBasedARExample/CreateImage/CreateImage.cs" />
-        <option value="$PROJECT_DIR$/Assets/MarkerBasedARExample/Drawing/WebCamDrawing.cs" />
+        <option value="$PROJECT_DIR$/Assets/MarkerBasedARExample/MenuPrincipal.cs" />
         <option value="$PROJECT_DIR$/Assets/MarkerBasedARExample/ObjectSelect/ObjectSelect.cs" />
+        <option value="$PROJECT_DIR$/Assets/MarkerBasedARExample/MainMenu.cs" />
+        <option value="$PROJECT_DIR$/Assets/MarkerBasedARExample/Drawing/WebCamDrawing.cs" />
+        <option value="$PROJECT_DIR$/Assets/MarkerBasedARExample/WebCamTextureMarkerBasedARExample/WebCamTextureMarkerBasedARExample.cs" />
+        <option value="$PROJECT_DIR$/Assets/MarkerBasedARExample/CreateImage/CreateImage.cs" />
       </list>
     </option>
   </component>
@@ -128,10 +125,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="17772">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="14764">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="17772" />
+      <option name="pid" value="14764" />
       <option name="selectedOptions">
         <set />
       </option>
@@ -146,7 +143,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1602281073506</updated>
-      <workItem from="1602281097886" duration="17688000" />
+      <workItem from="1602281097886" duration="27947000" />
     </task>
     <servers />
   </component>
@@ -174,69 +171,127 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="427" height="464" key="DebuggerActiveHint/0.0.1366.728@0.0.1366.728" timestamp="1602281245169" />
-    <state width="1323" height="111" key="GridCell.Tab.0.bottom" timestamp="1602296137392">
+    <state width="1323" height="142" key="GridCell.Tab.0.bottom" timestamp="1602475802270">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602296137392" />
-    <state width="1323" height="111" key="GridCell.Tab.0.center" timestamp="1602296137392">
+    <state width="1323" height="142" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602475802270" />
+    <state width="1323" height="142" key="GridCell.Tab.0.center" timestamp="1602475802269">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1602296137392" />
-    <state width="1323" height="111" key="GridCell.Tab.0.left" timestamp="1602296137392">
+    <state width="1323" height="142" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1602475802269" />
+    <state width="1323" height="142" key="GridCell.Tab.0.left" timestamp="1602475802269">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1602296137392" />
-    <state width="1323" height="111" key="GridCell.Tab.0.right" timestamp="1602296137392">
+    <state width="1323" height="142" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1602475802269" />
+    <state width="1323" height="142" key="GridCell.Tab.0.right" timestamp="1602475802269">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602296137392" />
-    <state width="1323" height="111" key="GridCell.Tab.1.bottom" timestamp="1602296137072">
+    <state width="1323" height="142" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602475802269" />
+    <state width="1323" height="142" key="GridCell.Tab.1.bottom" timestamp="1602475820242">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602296137072" />
-    <state width="1323" height="111" key="GridCell.Tab.1.center" timestamp="1602296137072">
+    <state width="1323" height="142" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602475820242" />
+    <state width="1323" height="142" key="GridCell.Tab.1.center" timestamp="1602475820241">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1602296137072" />
-    <state width="1323" height="111" key="GridCell.Tab.1.left" timestamp="1602296137072">
+    <state width="1323" height="142" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1602475820241" />
+    <state width="1323" height="142" key="GridCell.Tab.1.left" timestamp="1602475820240">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1602296137072" />
-    <state width="1323" height="111" key="GridCell.Tab.1.right" timestamp="1602296137072">
+    <state width="1323" height="142" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1602475820240" />
+    <state width="1323" height="142" key="GridCell.Tab.1.right" timestamp="1602475820242">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1602296137072" />
-    <state width="1323" height="111" key="GridCell.Tab.2.bottom" timestamp="1602296137073">
+    <state width="1323" height="142" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1602475820242" />
+    <state width="1323" height="142" key="GridCell.Tab.2.bottom" timestamp="1602475801687">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.2.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602296137073" />
-    <state width="1323" height="111" key="GridCell.Tab.2.center" timestamp="1602296137072">
+    <state width="1323" height="142" key="GridCell.Tab.2.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602475801687" />
+    <state width="1323" height="142" key="GridCell.Tab.2.center" timestamp="1602475801686">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.2.center/0.0.1366.728@0.0.1366.728" timestamp="1602296137072" />
-    <state width="1323" height="111" key="GridCell.Tab.2.left" timestamp="1602296137072">
+    <state width="1323" height="142" key="GridCell.Tab.2.center/0.0.1366.728@0.0.1366.728" timestamp="1602475801686" />
+    <state width="1323" height="142" key="GridCell.Tab.2.left" timestamp="1602475801686">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.2.left/0.0.1366.728@0.0.1366.728" timestamp="1602296137072" />
-    <state width="1323" height="111" key="GridCell.Tab.2.right" timestamp="1602296137072">
+    <state width="1323" height="142" key="GridCell.Tab.2.left/0.0.1366.728@0.0.1366.728" timestamp="1602475801686" />
+    <state width="1323" height="142" key="GridCell.Tab.2.right" timestamp="1602475801687">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1602296137072" />
-    <state width="1323" height="111" key="GridCell.Tab.3.bottom" timestamp="1602296137073">
+    <state width="1323" height="142" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1602475801687" />
+    <state width="1323" height="142" key="GridCell.Tab.3.bottom" timestamp="1602475801687">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.3.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602296137073" />
-    <state width="1323" height="111" key="GridCell.Tab.3.center" timestamp="1602296137073">
+    <state width="1323" height="142" key="GridCell.Tab.3.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602475801687" />
+    <state width="1323" height="142" key="GridCell.Tab.3.center" timestamp="1602475801687">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.3.center/0.0.1366.728@0.0.1366.728" timestamp="1602296137073" />
-    <state width="1323" height="111" key="GridCell.Tab.3.left" timestamp="1602296137073">
+    <state width="1323" height="142" key="GridCell.Tab.3.center/0.0.1366.728@0.0.1366.728" timestamp="1602475801687" />
+    <state width="1323" height="142" key="GridCell.Tab.3.left" timestamp="1602475801687">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.3.left/0.0.1366.728@0.0.1366.728" timestamp="1602296137073" />
-    <state width="1323" height="111" key="GridCell.Tab.3.right" timestamp="1602296137073">
+    <state width="1323" height="142" key="GridCell.Tab.3.left/0.0.1366.728@0.0.1366.728" timestamp="1602475801687" />
+    <state width="1323" height="142" key="GridCell.Tab.3.right" timestamp="1602475801687">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="111" key="GridCell.Tab.3.right/0.0.1366.728@0.0.1366.728" timestamp="1602296137073" />
+    <state width="1323" height="142" key="GridCell.Tab.3.right/0.0.1366.728@0.0.1366.728" timestamp="1602475801687" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/MarkerBasedARExample/CreateImage/CreateImage.cs</url>
+          <line>85</line>
+          <properties documentPath="C:\git\poc-tcc\augmented-reality\Assets\MarkerBasedARExample\CreateImage\CreateImage.cs" initialLine="83">
+            <startOffsets>
+              <option value="2972" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3023" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/MarkerBasedARExample/CreateImage/CreateImage.cs</url>
+          <line>20</line>
+          <properties documentPath="C:\git\poc-tcc\augmented-reality\Assets\MarkerBasedARExample\CreateImage\CreateImage.cs" initialLine="20">
+            <startOffsets>
+              <option value="539" />
+            </startOffsets>
+            <endOffsets>
+              <option value="559" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/MarkerBasedARExample/CreateImage/CreateImage.cs</url>
+          <line>39</line>
+          <properties documentPath="C:\git\poc-tcc\augmented-reality\Assets\MarkerBasedARExample\CreateImage\CreateImage.cs" initialLine="39">
+            <startOffsets>
+              <option value="1062" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1163" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/MarkerBasedARExample/CreateImage/CreateImage.cs</url>
+          <line>50</line>
+          <properties documentPath="C:\git\poc-tcc\augmented-reality\Assets\MarkerBasedARExample\CreateImage\CreateImage.cs" initialLine="50">
+            <startOffsets>
+              <option value="1355" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1444" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

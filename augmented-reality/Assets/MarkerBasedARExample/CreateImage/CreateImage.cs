@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class CreateImage : MonoBehaviour
 {
     private GameObject buttonCreateImage;
+    private GameObject buttonBackMainMenu;
     private GameObject[] listObjectSelecionado;
     private InformationObjectList informationObjectList;
     private string nameBDPlayerPrefab;
@@ -49,15 +50,9 @@ public class CreateImage : MonoBehaviour
     {
         listObjectSelecionado = GameObject.FindGameObjectsWithTag(PropertiesModel.TagMoveObject);
         buttonCreateImage = GameObject.Find("/Canvas/btnCreateImage");
+        buttonBackMainMenu = GameObject.Find("/Canvas/btnBackMainMenu");
     }
-
-    public void OnCreateImageButton()
-    {
-        StartCoroutine(CaptureScreenShot());
-        //SceneManager.LoadScene("WebCamTextureMarkerBasedARExample");
-        SceneManager.LoadScene("WebCamDrawingScene");
-    }
-
+    
     IEnumerator CaptureScreenShot()
     {
         yield return new WaitForEndOfFrame();
@@ -87,8 +82,6 @@ public class CreateImage : MonoBehaviour
         Texture2D resultCannyTexture = new Texture2D(resultInvertMat.cols(), resultInvertMat.rows(), TextureFormat.ARGB32, false);
         Utils.matToTexture2D(resultInvertMat, resultCannyTexture);
 
-        //CriarTexturaTransparente(resultCannyTexture);
-
         // Salva a imagem para ser detectado
         PropertiesModel.PathObjectDrawing = GetImagePath();
         SaveImage(resultCannyTexture, PropertiesModel.PathObjectDrawing);
@@ -97,35 +90,6 @@ public class CreateImage : MonoBehaviour
         Destroy(resultCannyTexture);
         Destroy(screenImageTexture);
     }
-
-    //public Texture2D CriarTexturaTransparente(Texture2D texture)
-    //{
-    //    Color corTransparente2 = new Color(1.0f, 1.0f, 1.0f, 0f);
-    //    Color corTransparente = new Color(1.0f, 1.0f, 1.0f, 0f);
-
-    //    //for (int x = 0; x < texture.height; x++)
-    //    //{
-    //    //    for (int y = 0; y < texture.width; y++)
-    //    //    {
-    //    //        texture.SetPixel(x, y, Color.white);
-    //    //    }
-    //    //}
-
-    //    for (int y = 0; y < texture.height; y++)
-    //    {
-    //        for (int x = 0; x < texture.width; x++)
-    //        {
-    //            if (!Color.black.Equals(texture.GetPixel(x, y)))
-    //            {
-    //                texture.SetPixel(x, y, corTransparente2);
-    //            }
-    //        }
-    //    }
-
-    //    texture.Apply();
-    //    SaveImage(texture, GetImagePath());
-    //    return texture;
-    //}
 
     private string GetImagePath()
     {
@@ -137,14 +101,7 @@ public class CreateImage : MonoBehaviour
         }
 
         string fileName = GetFilename();
-        string imagePath = Path.Combine(directory, fileName);
-
-        if (isMarker)
-        {
-            imagePath = Path.Combine(Application.persistentDataPath, fileName);
-        }
-
-        return imagePath;
+        return Path.Combine(directory, fileName);
     }
 
     public string GetFilename()
@@ -190,5 +147,25 @@ public class CreateImage : MonoBehaviour
     void ObjectScreenVisible(bool isVisible)
     {
         buttonCreateImage.SetActive(isVisible);
+        buttonBackMainMenu.SetActive(isVisible);
+    }
+    
+    public void OnCreateImageButton()
+    {
+        if (isMarker)
+        {
+            SaveInformationObject();
+            SceneManager.LoadScene("WebCamTextureMarkerBasedARExample");
+        }
+        else 
+        {
+            StartCoroutine(CaptureScreenShot());
+            SceneManager.LoadScene("WebCamDrawingScene");
+        }
+    }
+    
+    public void onBackMainMenu()
+    {
+        SceneManager.LoadScene("MainMenuScene");
     }
 }
