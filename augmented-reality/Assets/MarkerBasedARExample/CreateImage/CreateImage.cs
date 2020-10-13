@@ -5,6 +5,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class CreateImage : MonoBehaviour
 {
@@ -35,6 +36,13 @@ public class CreateImage : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        listObjectSelecionado = GameObject.FindGameObjectsWithTag(PropertiesModel.TagMoveObject);
+        buttonCreateImage = GameObject.Find("/Canvas/btnCreateImage");
+        buttonBackMainMenu = GameObject.Find("/Canvas/btnBackMainMenu");
+    }
+    
     private void DeletePlayerPrefs()
     {
         string directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamic);
@@ -45,13 +53,6 @@ public class CreateImage : MonoBehaviour
         
         PlayerPrefs.DeleteAll();
     }
-
-    private void Start()
-    {
-        listObjectSelecionado = GameObject.FindGameObjectsWithTag(PropertiesModel.TagMoveObject);
-        buttonCreateImage = GameObject.Find("/Canvas/btnCreateImage");
-        buttonBackMainMenu = GameObject.Find("/Canvas/btnBackMainMenu");
-    }
     
     IEnumerator CaptureScreenShot()
     {
@@ -61,7 +62,11 @@ public class CreateImage : MonoBehaviour
 
         // Captura imagem da tela
         Texture2D screenImageTexture = ScreenCapture.CaptureScreenshotAsTexture(2);
-        
+
+        // Salva a imagem original
+        string pathObjectOriginal = GetImagePath(true);
+        SaveImage(screenImageTexture, pathObjectOriginal);
+
         // Converte de Texture para Mat do OpenCV
         Mat screenImageMat = new Mat(screenImageTexture.height, screenImageTexture.width, CvType.CV_8UC4);
         Utils.texture2DToMat(screenImageTexture, screenImageMat);
@@ -82,8 +87,8 @@ public class CreateImage : MonoBehaviour
         Texture2D resultCannyTexture = new Texture2D(resultInvertMat.cols(), resultInvertMat.rows(), TextureFormat.ARGB32, false);
         Utils.matToTexture2D(resultInvertMat, resultCannyTexture);
 
-        // Salva a imagem para ser detectado
-        PropertiesModel.PathObjectDrawing = GetImagePath();
+        // Salva a imagem em bordas para ser detectado
+        PropertiesModel.PathObjectDrawing = GetImagePath(false);
         SaveImage(resultCannyTexture, PropertiesModel.PathObjectDrawing);
         SaveInformationObject();
 
@@ -91,9 +96,14 @@ public class CreateImage : MonoBehaviour
         Destroy(screenImageTexture);
     }
 
-    private string GetImagePath()
+    private string GetImagePath(bool original)
     {
-        string directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamic);
+        string directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicEdge);
+        
+        if (original)
+        {
+            directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicOriginal);
+        }
 
         if (!Directory.Exists(directory))
         {

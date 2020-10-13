@@ -139,8 +139,11 @@ namespace Drawing
             RawImage imageTransparent = FindObjectOfType<RawImage>();
             imageTransparent.texture = transparentTexture;
             
+            Canvas canvas = FindObjectOfType<Canvas>();
+            RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
+
             imageTransparent.rectTransform.sizeDelta = new Vector2(
-                transparentTexture.width, transparentTexture.height);
+                canvasRectTransform.rect.width, canvasRectTransform.rect.height);
         }
 
         public Texture2D GetTransparentTexture()
@@ -168,8 +171,8 @@ namespace Drawing
             Texture2D Texture = null;
             byte[] fileData;
 
-            // PropertiesModel.PathObjectDrawing =
-            //     "C:\\Users\\evert\\AppData\\LocalLow\\DefaultCompany\\01-poc-tcc-3d-object-replacement\\patternImg\\klpyn38d.png";
+            //PropertiesModel.PathObjectDrawing =
+            //    "C:\\Users\\evert\\AppData\\LocalLow\\DefaultCompany\\AR MarkerLess\\patternImg\\ggjtxele.png";
             
             if (File.Exists(PropertiesModel.PathObjectDrawing))
             {
