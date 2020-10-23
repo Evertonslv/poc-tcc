@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/MarkerBasedARExample/ObjectSelect/ObjectSelectMarkerScene.unity
     guid: dccf1bf32e92f1c4eb81c84272367c80
   - enabled: 1
-    path: Assets/MarkerBasedARExample/ObjectSelect/ObjectList.unity
+    path: Assets/MarkerBasedARExample/ObjectSelect/ObjectListScene.unity
     guid: 439f111c6086bc74d917adc3f3714277
   - enabled: 1
     path: Assets/MarkerBasedARExample/Drawing/WebCamDrawingScene.unity

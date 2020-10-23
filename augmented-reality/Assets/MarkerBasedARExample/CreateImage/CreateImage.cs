@@ -14,6 +14,7 @@ public class CreateImage : MonoBehaviour
     private GameObject[] listObjectSelecionado;
     private InformationObjectList informationObjectList;
     private string nameBDPlayerPrefab;
+    private string fileName;
 
     public bool isMarker;
 
@@ -38,6 +39,7 @@ public class CreateImage : MonoBehaviour
 
     private void Start()
     {
+        fileName = GetFilename();
         listObjectSelecionado = GameObject.FindGameObjectsWithTag(PropertiesModel.TagMoveObject);
         buttonCreateImage = GameObject.Find("/Canvas/btnCreateImage");
         buttonBackMainMenu = GameObject.Find("/Canvas/btnBackMainMenu");
@@ -45,12 +47,19 @@ public class CreateImage : MonoBehaviour
     
     private void DeletePlayerPrefs()
     {
-        string directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamic);
+        string directoryEdge = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicEdge);
 
-        if (Directory.Exists(directory)) { 
-            Directory.Delete(directory, true); 
+        if (Directory.Exists(directoryEdge)) { 
+            Directory.Delete(directoryEdge, true); 
         }
-        
+
+        string directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicOriginal);
+
+        if (Directory.Exists(directory))
+        {
+            Directory.Delete(directory, true);
+        }
+
         PlayerPrefs.DeleteAll();
     }
     
@@ -102,7 +111,7 @@ public class CreateImage : MonoBehaviour
         
         if (original)
         {
-            directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicOriginal);
+            directory = Path.Combine(Application.dataPath, PropertiesModel.FolderImagemDynamicOriginal);
         }
 
         if (!Directory.Exists(directory))
@@ -110,7 +119,6 @@ public class CreateImage : MonoBehaviour
             Directory.CreateDirectory(directory);
         }
 
-        string fileName = GetFilename();
         return Path.Combine(directory, fileName);
     }
 

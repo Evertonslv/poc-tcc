@@ -22,12 +22,18 @@ namespace MainMenu
 
         public void OnObjectsImportButtonClick()
         {
-            SceneManager.LoadScene("WebCamTextureToMatHelperExample");
+            SceneManager.LoadScene("ObjectImportScene");
         }
 
         public void OnObjectAugmentedRealityClick()
         {
             SceneManager.LoadScene("WebCamTextureMarkerBasedARExample");
+        }        
+        
+        public void OnDrawAgain()
+        {
+            PropertiesModel.TypeVisualization = "DrawAgain";
+            SceneManager.LoadScene("ObjectListScene");
         }
     }
 }

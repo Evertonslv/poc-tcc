@@ -13,28 +13,38 @@ public class ObjectSelect : MonoBehaviour
         markerIdObject = MarkerIdObject.GetInstance();
         GameObject objectSelected;
 
-        if (PropertiesModel.NameObjectSelected == null)
+        if (PropertiesModel.ImportedExternalObject != null)
         {
-            // objectSelected = SelectObject("Gift1");
-            // objectSelected = SelectObject("TreeStump");
-            objectSelected = SelectObject("Sledge");
-            //objectSelected = SelectObject("Cube");
+            objectSelected = PropertiesModel.ImportedExternalObject;
         }
         else
         {
-            objectSelected = SelectObject(PropertiesModel.NameObjectSelected);
-        }
-        
-        if (gameObject.scene.name == "ObjectSelectWithoutQrCodeScene")
-        {
-            ObjectCreate(objectSelected);
-        }
-        else
-        {
-            MarkerIdControl markerIdControl = MarkerIdControl.GetInstance();
-            CreateObjectWithIdMarker(objectSelected, markerIdControl.GetMarkerId());
+            if (PropertiesModel.NameObjectSelected == null)
+            {
+                // objectSelected = SelectObject("Gift1");
+                // objectSelected = SelectObject("TreeStump");
+                //objectSelected = SelectObject("Sledge");
+                objectSelected = SelectObject("Gift3");
+                //objectSelected = SelectObject("Cube");
+            }
+            else
+            {
+                objectSelected = SelectObject(PropertiesModel.NameObjectSelected);
+            }
         }
 
+        if (objectSelected != null)
+        {
+            if (gameObject.scene.name == "ObjectSelectMarkerLessScene")
+            {
+                ObjectCreate(objectSelected);
+            }
+            else
+            {
+                MarkerIdControl markerIdControl = MarkerIdControl.GetInstance();
+                CreateObjectWithIdMarker(objectSelected, markerIdControl.GetMarkerId());
+            }
+        }
     }
 
     private GameObject SelectObject(string nameObject)
