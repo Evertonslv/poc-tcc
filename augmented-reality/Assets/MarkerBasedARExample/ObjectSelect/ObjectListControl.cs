@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +8,8 @@ public class ObjectListControl : MonoBehaviour
 {
     private List<PlayerItem> playerItems;
     private Texture2D[] imageTextures;
+    private string[] nameButton;
+    private bool isDraw;
 
     [SerializeField]
     private GameObject buttonTemplate;
@@ -15,25 +19,91 @@ public class ObjectListControl : MonoBehaviour
 
     private void Awake()
     {
-        if (PropertiesModel.TypeVisualization == "DrawAgain")
+        isDraw = PropertiesModel.TypeVisualization == "DrawAgain";
+
+        if (isDraw)
         {
-            imageTextures = Resources.LoadAll<Texture2D>("imageDrawing/original");
+            DirectoryInfo info = new DirectoryInfo(PropertiesModel.FolderImagemDynamicEdge);
+            FileInfo[] fileInfo = info.GetFiles("*.png");
+
+            imageTextures = new Texture2D[fileInfo.Length];
+
+            for (int i = 0; i < fileInfo.Length; i++) {
+                imageTextures[i] = GetTexture2D(fileInfo[i]);
+            }
         }
+        else
+        {
+            GameObject[] game = ImportResources.GetListGameObject();
+
+            nameButton = new string[game.Length];
+            for (int i = 0; i < game.Length; i++)
+            {
+                nameButton[i] = game[i].name;
+            }
+        }
+    }
+
+    private Texture2D GetTexture2D(FileInfo fileInfo)
+    {
+        MemoryStream dest = new MemoryStream();
+
+        //Read from each Image File
+        using (Stream source = fileInfo.OpenRead())
+        {
+            byte[] buffer = new byte[2048];
+            int bytesRead;
+            while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                dest.Write(buffer, 0, bytesRead);
+            }
+        }
+
+        byte[] imageBytes = dest.ToArray();
+
+        Texture2D texture2D = new Texture2D(2, 2, TextureFormat.ARGB32, false);
+        texture2D.LoadImage(imageBytes);
+        texture2D.name = fileInfo.Name;
+
+        return texture2D;
     }
 
     private void Start()
     {
         playerItems = new List<PlayerItem>();
 
-        for (int i = 0; i < imageTextures.Length; i++)
+        if (isDraw)
+        {
+            GenerateItemTextures();
+        }
+        else
+        {
+            GenerateItemTexts();
+        }        
+
+        GenerationListButton();
+    }
+
+    private void GenerateItemTexts()
+    {
+        for (int i = 0; i < nameButton.Length; i++)
         {
             PlayerItem playerItem = new PlayerItem();
-            playerItem.imageTexture = imageTextures[i];
+            playerItem.textButton = nameButton[i];
 
             playerItems.Add(playerItem);
         }
+    }
 
-        GenerationListButton();
+    private void GenerateItemTextures()
+    {
+        for (int i = 0; i < imageTextures.Length; i++)
+        {
+            PlayerItem playerItem = new PlayerItem();
+            playerItem.textureButton = imageTextures[i];
+
+            playerItems.Add(playerItem);
+        }
     }
 
     void GenerationListButton()
@@ -43,13 +113,22 @@ public class ObjectListControl : MonoBehaviour
             GameObject newButtom = Instantiate(buttonTemplate);
             newButtom.SetActive(true);
 
-            newButtom.GetComponent<ObjectListButton>().SetImage(item.imageTexture);
+            if(isDraw)
+            {
+                newButtom.GetComponent<ObjectListButton>().SetImage(item.textureButton);
+            }
+            else
+            {
+                newButtom.GetComponent<ObjectListButton>().SetText(item.textButton);
+            }
+
             newButtom.transform.SetParent(buttonTemplate.transform.parent, false);
         }
     }
 
     public class PlayerItem
     {
-        public Texture2D imageTexture;
+        public Texture2D textureButton;
+        public string textButton;
     }
 }

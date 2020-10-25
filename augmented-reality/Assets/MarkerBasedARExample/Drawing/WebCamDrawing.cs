@@ -171,8 +171,6 @@ namespace Drawing
             Texture2D Texture = null;
             byte[] fileData;
 
-            //PropertiesModel.PathObjectDrawing =
-            //    "C:\\Users\\evert\\AppData\\LocalLow\\DefaultCompany\\AR MarkerLess\\patternImg\\ggjtxele.png";
             
             if (File.Exists(PropertiesModel.PathObjectDrawing))
             {

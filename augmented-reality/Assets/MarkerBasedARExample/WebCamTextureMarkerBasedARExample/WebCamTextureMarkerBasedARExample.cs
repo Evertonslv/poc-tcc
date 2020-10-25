@@ -372,7 +372,7 @@ namespace MarkerBasedARExample
             markerSettings.markerDesign = markerDesign;
             markerSettings.ARGameObject = ARObjects;
 
-            GameObject objectAR = Import.GetGameObjectResources(informationObject.Name);
+            GameObject objectAR = ImportResources.GetGameObject(informationObject.Name);
             GameObject objectCreated = Instantiate(objectAR);
 
             objectCreated.AddComponent<RectTransform>();

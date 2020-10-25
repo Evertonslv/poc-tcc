@@ -7,12 +7,14 @@ namespace MainMenu
     {
         public void OnObjectCreateWithMarkerButtonClick()
         {
-            SceneManager.LoadScene("ObjectSelectMarkerScene");
+            PropertiesModel.TypeVisualization = "GenerateMarker";
+            SceneManager.LoadScene("ObjectListScene");
         }
 
         public void OnObjectCreateMarkerLessButtonClick()
         {
-            SceneManager.LoadScene("ObjectSelectMarkerLessScene");
+            PropertiesModel.TypeVisualization = "GenerateMarker";
+            SceneManager.LoadScene("ObjectListScene");
         }
 
         public void OnObjectsCreatedButtonClick()

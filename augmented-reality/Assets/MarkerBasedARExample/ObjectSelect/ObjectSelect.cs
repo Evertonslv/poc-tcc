@@ -49,7 +49,7 @@ public class ObjectSelect : MonoBehaviour
 
     private GameObject SelectObject(string nameObject)
     {
-        return Import.GetGameObjectResources(nameObject);
+        return ImportResources.GetGameObject(nameObject);
     }
 
     private void ObjectCreate(GameObject objectSelected)

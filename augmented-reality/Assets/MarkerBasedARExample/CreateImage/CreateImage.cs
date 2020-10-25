@@ -41,19 +41,19 @@ public class CreateImage : MonoBehaviour
     {
         fileName = GetFilename();
         listObjectSelecionado = GameObject.FindGameObjectsWithTag(PropertiesModel.TagMoveObject);
-        buttonCreateImage = GameObject.Find("/Canvas/btnCreateImage");
-        buttonBackMainMenu = GameObject.Find("/Canvas/btnBackMainMenu");
+        buttonCreateImage = GameObject.Find("/Canvas/GroupButton/btnCreateImage");
+        buttonBackMainMenu = GameObject.Find("/Canvas/GroupButton/btnBackMainMenu");
     }
     
     private void DeletePlayerPrefs()
     {
-        string directoryEdge = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicEdge);
+        string directoryEdge = Path.Combine(PropertiesModel.FolderImagemDynamicEdge);
 
         if (Directory.Exists(directoryEdge)) { 
             Directory.Delete(directoryEdge, true); 
         }
 
-        string directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicOriginal);
+        string directory = Path.Combine(PropertiesModel.FolderImagemDynamicOriginal);
 
         if (Directory.Exists(directory))
         {
@@ -184,6 +184,7 @@ public class CreateImage : MonoBehaviour
     
     public void onBackMainMenu()
     {
-        SceneManager.LoadScene("MainMenuScene");
+        PropertiesModel.TypeVisualization = "GenerateMarker";
+        SceneManager.LoadScene("ObjectListScene");
     }
 }
