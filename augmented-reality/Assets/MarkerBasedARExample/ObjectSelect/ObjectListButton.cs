@@ -42,8 +42,14 @@ public class ObjectListButton : MonoBehaviour
         {
             PropertiesModel.NameObjectSelected = myNameImage;
 
-            SceneManager.LoadScene("ObjectSelectMarkerLessScene");
-            //SceneManager.LoadScene("ObjectSelectMarkerScene");
+            if (PropertiesModel.isMarker)
+            {
+                SceneManager.LoadScene("ObjectSelectMarkerScene");
+            } 
+            else
+            {
+                SceneManager.LoadScene("ObjectSelectMarkerLessScene");
+            }
         }
     }
 

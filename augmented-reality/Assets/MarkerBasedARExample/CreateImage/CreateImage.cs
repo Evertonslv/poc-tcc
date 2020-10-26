@@ -23,6 +23,7 @@ public class CreateImage : MonoBehaviour
         DeletePlayerPrefs();
 
         nameBDPlayerPrefab = PropertiesModel.NameBDMarkerLessPlayerPrefab;
+        PropertiesModel.isMarker = isMarker;
 
         if (isMarker)
         {
@@ -47,13 +48,13 @@ public class CreateImage : MonoBehaviour
     
     private void DeletePlayerPrefs()
     {
-        string directoryEdge = Path.Combine(PropertiesModel.FolderImagemDynamicEdge);
+        string directoryEdge = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicEdge);
 
         if (Directory.Exists(directoryEdge)) { 
             Directory.Delete(directoryEdge, true); 
         }
 
-        string directory = Path.Combine(PropertiesModel.FolderImagemDynamicOriginal);
+        string directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicOriginal);
 
         if (Directory.Exists(directory))
         {
@@ -111,7 +112,7 @@ public class CreateImage : MonoBehaviour
         
         if (original)
         {
-            directory = Path.Combine(Application.dataPath, PropertiesModel.FolderImagemDynamicOriginal);
+            directory = Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicOriginal);
         }
 
         if (!Directory.Exists(directory))

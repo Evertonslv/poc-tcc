@@ -293,9 +293,14 @@ namespace Drawing
             webCamTextureToMatHelper.Dispose ();
         }
         
-        public void onBackMainMenu()
+        public void OnBackMainMenu()
         {
             SceneManager.LoadScene("MainMenuScene");
+        }
+
+        public void OnDetectMarker()
+        {
+            SceneManager.LoadScene("WebCamTextureMarkerBasedARExample");
         }
     }
 }

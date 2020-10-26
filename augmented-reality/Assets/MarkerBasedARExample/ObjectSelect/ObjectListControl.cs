@@ -17,13 +17,16 @@ public class ObjectListControl : MonoBehaviour
     [SerializeField]
     private GridLayoutGroup gridLayoutGroup;
 
+    [SerializeField]
+    private GameObject viewPort;
+
     private void Awake()
     {
         isDraw = PropertiesModel.TypeVisualization == "DrawAgain";
 
         if (isDraw)
         {
-            DirectoryInfo info = new DirectoryInfo(PropertiesModel.FolderImagemDynamicEdge);
+            DirectoryInfo info = new DirectoryInfo(Path.Combine(Application.persistentDataPath, PropertiesModel.FolderImagemDynamicOriginal));
             FileInfo[] fileInfo = info.GetFiles("*.png");
 
             imageTextures = new Texture2D[fileInfo.Length];
@@ -108,6 +111,9 @@ public class ObjectListControl : MonoBehaviour
 
     void GenerationListButton()
     {
+        var mediaScreen = viewPort.GetComponent<RectTransform>().rect.width / (gridLayoutGroup.cellSize.x + gridLayoutGroup.spacing.x);
+        gridLayoutGroup.constraintCount = (int) Math.Floor(mediaScreen);
+
         foreach (PlayerItem item in playerItems)
         {
             GameObject newButtom = Instantiate(buttonTemplate);
