@@ -368,7 +368,7 @@ namespace OpenCVMarkerLessAR
         
             if (enableRatioTest) {
                 // To avoid NaN's when best match has zero distance we will use inversed ratio. 
-                float minRatio = 1.15f / 1.5f;
+                float minRatio = 1.23f / 1.5f;
 
                 // KNN match will return 2 nearest matches for each query descriptor
                 m_matcher.knnMatch (queryDescriptors, m_knnMatches, 2);

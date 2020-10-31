@@ -17,11 +17,6 @@ namespace MainMenu
             SceneManager.LoadScene("ObjectListScene");
         }
 
-        public void OnObjectsCreatedButtonClick()
-        {
-            SceneManager.LoadScene("WebCamTextureToMatExample");
-        }
-
         public void OnObjectsImportButtonClick()
         {
             SceneManager.LoadScene("ObjectImportScene");

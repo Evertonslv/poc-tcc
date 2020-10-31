@@ -134,7 +134,8 @@ namespace Drawing
 #endif
             webCamTextureToMatHelper.Initialize();
 
-            Texture2D transparentTexture = GetTransparentTexture();
+            Texture2D originalTexture = LoadTexture2D();
+            Texture2D transparentTexture = GetTransparentTexture(originalTexture);
             
             RawImage imageTransparent = FindObjectOfType<RawImage>();
             imageTransparent.texture = transparentTexture;
@@ -146,11 +147,10 @@ namespace Drawing
                 canvasRectTransform.rect.width, canvasRectTransform.rect.height);
         }
 
-        public Texture2D GetTransparentTexture()
+        public Texture2D GetTransparentTexture(Texture2D texture)
         {
             Color transparentColor = new Color(1.0f, 1.0f, 1.0f, 0f);
-            Texture2D texture = LoadTexture2D();
-
+            
             for (int y = 0; y < texture.height; y++)
             {
                 for (int x = 0; x < texture.width; x++)

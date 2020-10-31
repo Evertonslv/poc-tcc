@@ -168,6 +168,7 @@ namespace MarkerBasedARExample
             dictionaryAruco = Aruco.getPredefinedDictionary(PropertiesModel.DictionaryId);
             cornersAruco = new List<Mat>();
             idsAruco = new Mat();
+
         }
 
         // Update is called once per frame
@@ -191,7 +192,7 @@ namespace MarkerBasedARExample
                 }
                 else
                 {
-                    SetMarkerLess();       
+                    SetMarkerLess();
                 }
 
                 Utils.fastMatToTexture2D(rgbaMat, texture);

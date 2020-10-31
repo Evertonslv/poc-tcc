@@ -20,7 +20,7 @@ public class CreateImage : MonoBehaviour
 
     private void Awake()
     {
-        DeletePlayerPrefs();
+        //DeletePlayerPrefs();
 
         nameBDPlayerPrefab = PropertiesModel.NameBDMarkerLessPlayerPrefab;
         PropertiesModel.isMarker = isMarker;
